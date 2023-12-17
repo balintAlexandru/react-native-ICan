@@ -1,12 +1,12 @@
-import { createSlice } from "@reduxjs/toolkit";
+import {createSlice} from '@reduxjs/toolkit';
 
 const initialState = {
-  username: "",
+  username: '',
   category: [],
 };
 
 export const appSlice = createSlice({
-  name: "app",
+  name: 'app',
   initialState,
   reducers: {
     setUsername: (state, action) => {
@@ -14,14 +14,14 @@ export const appSlice = createSlice({
     },
 
     createCategory: (state, action) => {
-      state.category = [...state.category, { ...action.payload }];
+      state.category = [...state.category, {...action.payload}];
     },
 
     updateCategory: (state, action) => {
-      const { categoryName, name, icon } = action.payload;
+      const {categoryId, name, icon} = action.payload;
 
       const categoryPosition = state.category.findIndex(
-        (category) => category.name === categoryName
+        category => category.id === categoryId,
       );
 
       state.category[categoryPosition].name = name;
@@ -29,34 +29,34 @@ export const appSlice = createSlice({
     },
 
     deleteCategory: (state, action) => {
-      const { categoryName } = action.payload;
+      const {categoryId} = action.payload;
 
       state.category = state.category.filter(
-        (category) => category.name !== categoryName
+        category => category.id !== categoryId,
       );
     },
 
     createTask: (state, action) => {
-      const { categoryName, name, time } = action.payload;
+      const {categoryName, name, time} = action.payload;
 
       const position = state.category.findIndex(
-        (category) => category.name === categoryName
+        category => category.name === categoryName,
       );
 
       state.category[position].tasks = [
         ...state.category[position].tasks,
-        { name, time },
+        {name, time},
       ];
     },
 
     updateTask: (state, action) => {
-      const { categoryName, taskName, name, time } = action.payload;
+      const {categoryName, taskName, name, time} = action.payload;
 
       const categoryPosition = state.category.findIndex(
-        (category) => category.name === categoryName
+        category => category.name === categoryName,
       );
       const taskPosition = state.category[categoryPosition].tasks.findIndex(
-        (task) => task.name === taskName
+        task => task.name === taskName,
       );
 
       state.category[categoryPosition].tasks[taskPosition].name = name;
@@ -64,14 +64,14 @@ export const appSlice = createSlice({
     },
 
     deleteTask: (state, action) => {
-      const { categoryName, name } = action.payload;
+      const {categoryName, name} = action.payload;
 
       const position = state.category.findIndex(
-        (category) => category.name === categoryName
+        category => category.name === categoryName,
       );
 
       state.category[position].tasks = state.category[position].tasks.filter(
-        (task) => task.name !== name
+        task => task.name !== name,
       );
     },
   },

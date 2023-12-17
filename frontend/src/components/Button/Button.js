@@ -1,17 +1,21 @@
-import { Pressable, Text } from "react-native";
-import { styles } from "./ButtonStyle";
+import {Pressable, Text} from 'react-native';
+import {styles} from './ButtonStyle';
 
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
-const Button = (props) => {
-  const { text, backgroundColor, onPress, width, fontSize, paddingVertical } =
-    props;
+const Button = ({
+  text,
+  backgroundColor,
+  onPress,
+  width,
+  fontSize,
+  paddingVertical,
+}) => {
   return (
     <Pressable
-      style={{ ...styles.button, backgroundColor, width, paddingVertical }}
-      onPress={onPress}
-    >
-      <Text style={{ ...styles.text, fontSize }}>{text}</Text>
+      style={{...styles.button, backgroundColor, width, paddingVertical}}
+      onPress={onPress}>
+      <Text style={{...styles.text, fontSize}}>{text}</Text>
     </Pressable>
   );
 };
@@ -19,7 +23,7 @@ const Button = (props) => {
 Button.propTypes = {
   text: PropTypes.string,
   backgroundColor: PropTypes.string,
-  width: PropTypes.string,
+  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   fontSize: PropTypes.number,
   paddingVertical: PropTypes.number,
   onPress: PropTypes.func,

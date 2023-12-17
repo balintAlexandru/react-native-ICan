@@ -44,15 +44,42 @@ export const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: COLORS.PURPLE,
     marginTop: 24,
+    paddingHorizontal: 30,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  content: {
+    gap: 10,
+    fontFamily: 'Font',
+    letterSpacing: -0.3,
+  },
+  textContent: {
+    color: 'white',
   },
   categorysList: {
-    flex: 1,
+    marginTop: 20,
+    marginBottom: 20,
+  },
+  listContent: {
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: 12,
+    padding: 5,
+    paddingBottom: 30,
+  },
+  circle: {
+    borderColor: 'white',
+    borderWidth: 2,
+    width: 95,
+    height: 95,
+    borderRadius: 50,
     alignItems: 'center',
     justifyContent: 'center',
-    // backgroundColor: 'red',
   },
   buttonWrapper: {
-    marginBottom: 40,
+    marginBottom: 15,
     alignItems: 'center',
   },
   button: {
@@ -71,9 +98,11 @@ export const styles = StyleSheet.create({
     shadowRadius: 2.8,
   },
   categoryInfo: {
-    alignItems: 'center',
+    height: 350,
     paddingBottom: 35,
     gap: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   infoText: {
     fontFamily: 'Font',
