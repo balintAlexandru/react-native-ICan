@@ -1,14 +1,15 @@
 import {StyleSheet} from 'react-native';
 import {COLORS} from '../../constants/colors';
+import {RFValue} from 'react-native-responsive-fontsize';
 
 export const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     justifyContent: 'space-between',
-    height: 180,
+    height: RFValue(150),
     width: '48%',
     borderRadius: 10,
-    paddingVertical: 24,
+    paddingVertical: RFValue(10),
     backgroundColor: 'white',
     shadowColor: 'black',
     shadowOffset: {
@@ -30,8 +31,8 @@ export const styles = StyleSheet.create({
     gap: 20,
   },
   icon: {
-    marginTop: 20,
-    fontSize: 50,
+    marginTop: RFValue(18),
+    fontSize: RFValue(35),
   },
   infoWrapper: {
     alignItems: 'center',
@@ -39,8 +40,8 @@ export const styles = StyleSheet.create({
   name: {
     fontFamily: 'Font',
     letterSpacing: -0.3,
-    fontSize: 18,
-    fontWeight: 600,
+    fontSize: RFValue(14),
+    fontWeight: '500',
   },
   tasks: {
     fontFamily: 'Font',

@@ -1,5 +1,13 @@
 import {useState} from 'react';
-import {SafeAreaView, Text, TouchableOpacity, View} from 'react-native';
+import {
+  SafeAreaView,
+  Text,
+  TouchableOpacity,
+  View,
+  FlatList,
+} from 'react-native';
+
+import uuid from 'react-native-uuid';
 
 import {styles} from './TasksStyle';
 import {COLORS} from '../../constants/colors';
@@ -9,17 +17,44 @@ import {faGear} from '@fortawesome/free-solid-svg-icons/faGear';
 
 import {AddButton, AppModal, TaskCard} from '../../components';
 
+import {createTask} from '../../redux/slices/appSlice';
+import {useDispatch, useSelector} from 'react-redux';
+
 const Tasks = ({route, navigation}) => {
   const {category} = route.params;
-  const {id, name, icon, tasks} = category;
+  const {id, name, icon} = category;
 
   const [modalVisible, setModalVisible] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [taskModel, setTaskModel] = useState({
+    id: 0,
     name: '',
-    time: '',
+    time: {
+      hours: 0,
+      minutes: 0,
+    },
     completed: false,
   });
+
+  const categorys = useSelector(state => state.app.category);
+  const dispatch = useDispatch();
+  const tasks = categorys.filter(item => item.id === id)[0].tasks;
+
+  console.log(tasks);
+  const handleCreateTask = () => {
+    taskModel.id = uuid.v4();
+    dispatch(createTask({...taskModel, categoryId: id}));
+  };
+
+  const handleEditCategory = () => {
+    dispatch(
+      updateCategory({
+        categoryId: categoryModel.id,
+        name: categoryModel.name,
+        icon: categoryModel.icon,
+      }),
+    );
+  };
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -46,7 +81,11 @@ const Tasks = ({route, navigation}) => {
         </View>
 
         <View style={styles.tasksList}>
-          <TaskCard />
+          <FlatList
+            data={tasks}
+            renderItem={({item}) => <TaskCard task={item} />}
+            keyExtractor={item => item.id}
+          />
         </View>
 
         <AddButton onPress={setModalVisible} />
@@ -58,7 +97,7 @@ const Tasks = ({route, navigation}) => {
           type="tasks"
           value={taskModel}
           setValue={setTaskModel}
-          onPress={!editMode ? () => {} : () => {}}
+          onPress={!editMode ? handleCreateTask : () => {}}
           editMode={editMode}
           setEditMode={setEditMode}
         />

@@ -1,14 +1,13 @@
 import {StyleSheet} from 'react-native';
 import {COLORS} from '../../constants/colors';
+import {RFValue} from 'react-native-responsive-fontsize';
 
 export const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: 20,
     alignContent: 'center',
     borderRadius: 10,
+    marginVertical: RFValue(10),
+    marginHorizontal: RFValue(5),
     backgroundColor: 'white',
     shadowColor: 'black',
     shadowOffset: {
@@ -19,34 +18,59 @@ export const styles = StyleSheet.create({
     shadowRadius: 2.8,
   },
   radioWrapper: {
-    borderWidth: 1,
+    borderWidth: 2,
     borderColor: COLORS.PURPLE,
     borderRadius: 50,
     width: 28,
     height: 28,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   textWrapper: {
-    width: '75%',
-    gap: 7,
+    width: '70%',
+    gap: 4,
   },
   name: {
     fontFamily: 'Font',
-    fontSize: 20,
+    fontSize: RFValue(16),
     letterSpacing: -0.3,
   },
   timeText: {
     fontFamily: 'Font',
-    fontSize: 16,
+    fontSize: RFValue(14),
     letterSpacing: -0.3,
     fontWeight: '600',
     color: COLORS.GRAY,
   },
   time: {
     fontFamily: 'Font',
-    fontSize: 16,
+    fontSize: RFValue(14),
     letterSpacing: -0.3,
     fontWeight: '400',
     color: COLORS.GRAY,
   },
   settings: {},
+  settingWrapper: {
+    borderTopWidth: 1,
+    borderColor: COLORS.GRAY,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    paddingHorizontal: RFValue(20),
+    paddingVertical: RFValue(20),
+    gap: 40,
+  },
+  taskWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: RFValue(20),
+    paddingTop: RFValue(20),
+    paddingBottom: RFValue(10),
+  },
+  dots: {
+    width: RFValue(30),
+    height: RFValue(30),
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });

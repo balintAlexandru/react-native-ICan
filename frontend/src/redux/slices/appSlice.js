@@ -19,7 +19,6 @@ export const appSlice = createSlice({
 
     updateCategory: (state, action) => {
       const {categoryId, name, icon} = action.payload;
-      console.log('icon>>>>>>>', icon);
       const categoryPosition = state.category.findIndex(
         category => category.id === categoryId,
       );
@@ -37,16 +36,12 @@ export const appSlice = createSlice({
     },
 
     createTask: (state, action) => {
-      const {categoryName, name, time} = action.payload;
+      const {categoryId, name, time, completed} = action.payload;
 
       const position = state.category.findIndex(
-        category => category.name === categoryName,
+        category => category.id === categoryId,
       );
-
-      state.category[position].tasks = [
-        ...state.category[position].tasks,
-        {name, time},
-      ];
+      state.category[position].tasks.push({name, time, completed});
     },
 
     updateTask: (state, action) => {

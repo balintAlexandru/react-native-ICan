@@ -1,50 +1,51 @@
 import {StyleSheet} from 'react-native';
 import {COLORS} from '../../constants/colors';
+import {RFValue} from 'react-native-responsive-fontsize';
 
 export const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
     backgroundColor: 'white',
-    paddingHorizontal: 24,
   },
   container: {
     flex: 1,
-    paddingHorizontal: 24,
-    paddingTop: 24,
+    paddingHorizontal: RFValue(24),
+    paddingTop: RFValue(15),
+    paddingBottom: RFValue(10),
   },
   iconWrapper: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
   },
   textWrapper: {
-    marginTop: 1,
+    marginTop: RFValue(20),
   },
   title: {
     fontFamily: 'Font',
-    fontSize: 36,
+    fontSize: RFValue(36),
     fontWeight: '400',
     letterSpacing: -0.3,
   },
   day: {
     fontFamily: 'Font',
-    fontSize: 20,
+    fontSize: RFValue(16),
     fontWeight: '600',
     letterSpacing: -0.3,
     color: COLORS.GRAY,
   },
   date: {
     fontFamily: 'Font',
-    fontSize: 20,
+    fontSize: RFValue(16),
     fontWeight: '400',
     letterSpacing: -0.3,
     color: COLORS.GRAY,
   },
   completedTasks: {
-    height: 130,
     borderRadius: 10,
     backgroundColor: COLORS.PURPLE,
-    marginTop: 24,
-    paddingHorizontal: 30,
+    marginTop: RFValue(24),
+    paddingHorizontal: RFValue(30),
+    paddingVertical: RFValue(18),
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -58,16 +59,18 @@ export const styles = StyleSheet.create({
     color: 'white',
   },
   categorysList: {
-    marginTop: 15,
-    marginBottom: 20,
+    width: '100%',
+    marginTop: RFValue(15),
+    marginBottom: RFValue(40),
   },
+
   listContent: {
     flexWrap: 'wrap',
     flexDirection: 'row',
     justifyContent: 'space-between',
     gap: 12,
-    padding: 5,
-    paddingBottom: 30,
+    padding: RFValue(7),
+    paddingBottom: RFValue(30),
   },
   circle: {
     borderColor: 'white',
@@ -79,17 +82,19 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   categoryInfo: {
-    height: 350,
-    paddingBottom: 35,
+    flex: 1,
     gap: 20,
     alignItems: 'center',
     justifyContent: 'center',
+    marginTop: RFValue(15),
+    marginBottom: RFValue(20),
   },
   infoText: {
     fontFamily: 'Font',
-    fontSize: 18,
+    fontSize: RFValue(16),
     fontWeight: '400',
     letterSpacing: -0.3,
     color: COLORS.GRAY,
+    textAlign: 'center',
   },
 });

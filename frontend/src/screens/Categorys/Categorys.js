@@ -26,7 +26,7 @@ const Categorys = ({navigation}) => {
   const [categoryModel, setCategoryModel] = useState({
     id: '',
     name: '',
-    icon: '🎵',
+    icon: '',
     tasks: [],
   });
   const dispatch = useDispatch();
@@ -47,7 +47,6 @@ const Categorys = ({navigation}) => {
       }),
     );
   };
-  console.log(category);
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -82,21 +81,20 @@ const Categorys = ({navigation}) => {
             <Text style={{...styles.textContent, fontSize: 24}}>0%</Text>
           </View>
         </View>
-
-        <ScrollView
-          style={styles.categorysList}
-          contentContainerStyle={styles.listContent}>
-          {category.length === 0 && (
-            <View style={styles.categoryInfo}>
-              <FontAwesomeIcon icon={faBook} color={COLORS.GRAY} size={40} />
-              <Text style={styles.infoText}>
-                Did you know a good day start with a new task,so let's create a
-                category for it.
-              </Text>
-            </View>
-          )}
-          {category.length !== 0 &&
-            category?.map(item => (
+        {category.length === 0 && (
+          <View style={styles.categoryInfo}>
+            <FontAwesomeIcon icon={faBook} color={COLORS.GRAY} size={40} />
+            <Text style={styles.infoText}>
+              Did you know a good day start with a new task,so let's create a
+              category for it.
+            </Text>
+          </View>
+        )}
+        {category.length !== 0 && (
+          <ScrollView
+            style={styles.categorysList}
+            contentContainerStyle={styles.listContent}>
+            {category?.map(item => (
               <CategoryCard
                 category={item}
                 key={item.id}
@@ -106,7 +104,8 @@ const Categorys = ({navigation}) => {
                 navigation={navigation}
               />
             ))}
-        </ScrollView>
+          </ScrollView>
+        )}
 
         <AddButton onPress={setModalVisible} />
 

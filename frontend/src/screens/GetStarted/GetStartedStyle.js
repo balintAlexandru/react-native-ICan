@@ -1,30 +1,32 @@
-import { StyleSheet } from "react-native";
-import { COLORS } from "../../constants/colors";
+import {StyleSheet} from 'react-native';
+import {COLORS} from '../../constants/colors';
+import {RFValue} from 'react-native-responsive-fontsize';
 
 export const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: 'white',
   },
   container: {
-    paddingTop: 114,
-    paddingHorizontal: 24,
+    paddingTop: RFValue(100),
+    paddingHorizontal: RFValue(24),
   },
   title: {
-    fontFamily: "Font",
-    fontSize: 26,
-    fontWeight: "400",
+    fontFamily: 'Font',
+    fontSize: RFValue(26),
+    fontWeight: '400',
     letterSpacing: 0,
-    lineHeight: 28,
-    marginTop: 4,
+    lineHeight: RFValue(28),
+    marginTop: RFValue(4),
   },
   input: {
     borderColor: COLORS.GRAY,
     borderWidth: 2,
     borderRadius: 10,
     paddingVertical: 12,
-    paddingLeft: 10,
-    marginTop: 40,
-    marginBottom: 28,
+    paddingLeft: RFValue(10),
+    marginTop: RFValue(45),
+    marginBottom: RFValue(20),
+    width: '100%',
   },
 });

@@ -1,5 +1,6 @@
 import {StyleSheet} from 'react-native';
 import {COLORS} from '../../constants/colors';
+import {RFValue} from 'react-native-responsive-fontsize';
 
 export const styles = StyleSheet.create({
   container: {
@@ -10,8 +11,8 @@ export const styles = StyleSheet.create({
     width: '100%',
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
-    paddingHorizontal: 24,
-    paddingTop: 30,
+    paddingHorizontal: RFValue(24),
+    paddingTop: RFValue(30),
     shadowColor: 'black',
     shadowOffset: {
       width: 0,
@@ -22,35 +23,32 @@ export const styles = StyleSheet.create({
   },
   title: {
     fontFamily: 'Font',
-    fontSize: 24,
-    fontWeight: '400',
+    fontSize: RFValue(20),
+    fontWeight: '500',
     letterSpacing: -0.3,
   },
   nameWrapper: {
-    marginTop: 40,
+    marginTop: RFValue(40),
   },
   timeWrapper: {
-    marginTop: 20,
+    marginTop: RFValue(20),
   },
   label: {
-    fontSize: 18,
+    fontSize: RFValue(16),
   },
   input: {
     borderColor: COLORS.GRAY,
     borderWidth: 2,
     borderRadius: 10,
-    paddingVertical: 12,
-    paddingLeft: 10,
-    marginTop: 10,
+    paddingVertical: RFValue(12),
+    paddingLeft: RFValue(10),
+    marginTop: RFValue(10),
   },
-  inputIcon: {
-    width: 80,
-    height: 80,
-    borderRadius: 50,
-    position: 'absolute',
+  icon: {
+    fontSize: 50,
   },
   iconWrapper: {
-    marginTop: 20,
+    marginTop: RFValue(20),
   },
   iconContainer: {
     position: 'relative',
@@ -61,11 +59,17 @@ export const styles = StyleSheet.create({
     borderRadius: 50,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 10,
+    marginTop: RFValue(10),
   },
   buttonWrapper: {
-    marginTop: 30,
+    marginTop: RFValue(30),
     flexDirection: 'row',
-    gap: 24,
+    gap: 16,
   },
+  timeInputWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  timeInput: {},
 });

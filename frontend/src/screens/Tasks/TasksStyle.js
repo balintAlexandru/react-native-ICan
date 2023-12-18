@@ -1,5 +1,6 @@
 import {StyleSheet} from 'react-native';
 import {COLORS} from '../../constants/colors';
+import {RFValue} from 'react-native-responsive-fontsize';
 
 export const styles = StyleSheet.create({
   safeArea: {
@@ -8,33 +9,37 @@ export const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    paddingTop: 30,
+    paddingTop: RFValue(15),
+    paddingBottom: RFValue(12),
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 24,
+    paddingHorizontal: RFValue(24),
     borderBottomWidth: 1,
     borderColor: COLORS.GRAY,
-    paddingBottom: 20,
+    paddingBottom: RFValue(12),
   },
   titleWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 10,
+    gap: 5,
   },
   title: {
     fontFamily: 'Font',
-    fontSize: 28,
+    fontSize: RFValue(18),
     fontWeight: '600',
     letterSpacing: -0.3,
+    paddingRight: RFValue(2),
   },
   icon: {
-    fontSize: 24,
+    fontSize: RFValue(18),
   },
   tasksList: {
-    paddingHorizontal: 24,
-    paddingTop: 40,
+    paddingHorizontal: RFValue(24),
+    paddingTop: RFValue(24),
+    flex: 1,
+    marginBottom: RFValue(40),
   },
 });
