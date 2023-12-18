@@ -3,10 +3,9 @@ import {COLORS} from '../../constants/colors';
 
 export const styles = StyleSheet.create({
   container: {
-    // margin: 8,
     alignItems: 'center',
     justifyContent: 'space-between',
-    height: 210,
+    height: 180,
     width: '48%',
     borderRadius: 10,
     paddingVertical: 24,
@@ -28,7 +27,7 @@ export const styles = StyleSheet.create({
   cardInfo: {
     flex: 1,
     alignItems: 'center',
-    gap: 40,
+    gap: 20,
   },
   icon: {
     marginTop: 20,

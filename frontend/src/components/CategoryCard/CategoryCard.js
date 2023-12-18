@@ -14,12 +14,23 @@ import {deleteCategory} from '../../redux/slices/appSlice';
 
 import PropTypes from 'prop-types';
 
-const CategoryCard = ({category}) => {
+const CategoryCard = ({
+  category,
+  setModalVisible,
+  setCategoryModel,
+  setEditMode,
+  navigation,
+}) => {
   const [showSettings, setShowSettings] = useState(false);
   const dispatch = useDispatch();
 
   return (
-    <TouchableOpacity activeOpacity={1} style={styles.container}>
+    <TouchableOpacity
+      activeOpacity={1}
+      style={styles.container}
+      onPress={() => {
+        navigation.navigate('Tasks', {category});
+      }}>
       <TouchableOpacity
         activeOpacity={1}
         style={styles.iconWrapper}
@@ -43,7 +54,10 @@ const CategoryCard = ({category}) => {
             text="EDIT"
             backgroundColor={COLORS.AQUA_BLUE}
             onPress={() => {
-              console.log(category);
+              setModalVisible(true);
+              setCategoryModel({...category});
+              setShowSettings(false);
+              setEditMode(true);
             }}
             width={101}
             fontSize={16}
@@ -71,6 +85,10 @@ CategoryCard.propTypes = {
     icon: PropTypes.string,
     tasks: PropTypes.array,
   }),
+  setModalVisible: PropTypes.func,
+  setCategoryModel: PropTypes.func,
+  setEditMode: PropTypes.func,
+  navigation: PropTypes.any,
 };
 
 export default CategoryCard;

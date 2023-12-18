@@ -25,9 +25,9 @@ if linkage != nil
   use_frameworks! :linkage => linkage.to_sym
 end
 
-target 'frontend' do
+target 'ICan' do
   config = use_native_modules!
-
+  pod 'CocoaAsyncSocket'
   use_react_native!(
     :path => config[:reactNativePath],
     # Enables Flipper.
@@ -39,8 +39,9 @@ target 'frontend' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
-  target 'frontendTests' do
+  target 'ICanTests' do
     inherit! :complete
+   
     # Pods for testing
   end
 
@@ -53,3 +54,4 @@ target 'frontend' do
     )
   end
 end
+

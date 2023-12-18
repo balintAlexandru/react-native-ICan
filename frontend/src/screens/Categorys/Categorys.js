@@ -10,23 +10,23 @@ import {
 import uuid from 'react-native-uuid';
 
 import {useDispatch, useSelector} from 'react-redux';
-import {createCategory} from '../../redux/slices/appSlice';
+import {createCategory, updateCategory} from '../../redux/slices/appSlice';
 
 import {styles} from './CategorysStyle';
 import {COLORS} from '../../constants/colors';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faGear} from '@fortawesome/free-solid-svg-icons/faGear';
-import {faPlus} from '@fortawesome/free-solid-svg-icons/faPlus';
 import {faBook} from '@fortawesome/free-solid-svg-icons/faBook';
 
-import {AppModal, CategoryCard} from '../../components';
+import {AppModal, CategoryCard, AddButton} from '../../components';
 
-const Categorys = () => {
+const Categorys = ({navigation}) => {
   const [modalVisible, setModalVisible] = useState(false);
+  const [editMode, setEditMode] = useState(false);
   const [categoryModel, setCategoryModel] = useState({
     id: '',
     name: '',
-    icon: '📖',
+    icon: '🎵',
     tasks: [],
   });
   const dispatch = useDispatch();
@@ -38,7 +38,16 @@ const Categorys = () => {
     dispatch(createCategory(categoryModel));
   };
 
-  // console.log(category);
+  const handleEditCategory = () => {
+    dispatch(
+      updateCategory({
+        categoryId: categoryModel.id,
+        name: categoryModel.name,
+        icon: categoryModel.icon,
+      }),
+    );
+  };
+  console.log(category);
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -88,27 +97,29 @@ const Categorys = () => {
           )}
           {category.length !== 0 &&
             category?.map(item => (
-              <CategoryCard category={item} key={item.id} />
+              <CategoryCard
+                category={item}
+                key={item.id}
+                setModalVisible={setModalVisible}
+                setCategoryModel={setCategoryModel}
+                setEditMode={setEditMode}
+                navigation={navigation}
+              />
             ))}
         </ScrollView>
 
-        <View style={styles.buttonWrapper}>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => setModalVisible(true)}>
-            <FontAwesomeIcon icon={faPlus} size={25} />
-          </TouchableOpacity>
-        </View>
+        <AddButton onPress={setModalVisible} />
 
         <AppModal
           modalVisible={modalVisible}
           setModalVisible={setModalVisible}
-          title="Add Category"
-          textButton="CREATE"
+          title={!editMode ? 'Add Category' : 'Edit Category'}
           type="categorys"
           value={categoryModel}
           setValue={setCategoryModel}
-          onPress={handleCreateCategory}
+          onPress={!editMode ? handleCreateCategory : handleEditCategory}
+          editMode={editMode}
+          setEditMode={setEditMode}
         />
       </View>
     </SafeAreaView>

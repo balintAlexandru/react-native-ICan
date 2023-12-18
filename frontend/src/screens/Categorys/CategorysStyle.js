@@ -17,7 +17,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   textWrapper: {
-    marginTop: 24,
+    marginTop: 1,
   },
   title: {
     fontFamily: 'Font',
@@ -58,7 +58,7 @@ export const styles = StyleSheet.create({
     color: 'white',
   },
   categorysList: {
-    marginTop: 20,
+    marginTop: 15,
     marginBottom: 20,
   },
   listContent: {
@@ -77,25 +77,6 @@ export const styles = StyleSheet.create({
     borderRadius: 50,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  buttonWrapper: {
-    marginBottom: 15,
-    alignItems: 'center',
-  },
-  button: {
-    borderRadius: 10,
-    width: 145,
-    paddingVertical: 11,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'white',
-    shadowColor: 'black',
-    shadowOffset: {
-      width: 0,
-      height: 0,
-    },
-    shadowOpacity: 0.3,
-    shadowRadius: 2.8,
   },
   categoryInfo: {
     height: 350,

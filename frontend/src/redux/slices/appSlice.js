@@ -19,7 +19,7 @@ export const appSlice = createSlice({
 
     updateCategory: (state, action) => {
       const {categoryId, name, icon} = action.payload;
-
+      console.log('icon>>>>>>>', icon);
       const categoryPosition = state.category.findIndex(
         category => category.id === categoryId,
       );

@@ -13,11 +13,12 @@ const AppModal = ({
   modalVisible,
   setModalVisible,
   title,
-  textButton,
   type,
   value,
   setValue,
   onPress,
+  editMode,
+  setEditMode,
 }) => {
   return (
     <Modal animationType="slide" transparent={true} visible={modalVisible}>
@@ -30,7 +31,7 @@ const AppModal = ({
             style={styles.input}
             fontSize={16}
             keyboardType={'default'}
-            autoFocus={true}
+            // autoFocus={true}
             value={value.name}
             onChangeText={text => setValue({...value, name: text})}
           />
@@ -43,7 +44,7 @@ const AppModal = ({
               style={styles.input}
               fontSize={16}
               keyboardType={'default'}
-              autoFocus={true}
+              // autoFocus={true}
               // value={name}
               // onChangeText={value => setName(value)}
             />
@@ -59,7 +60,7 @@ const AppModal = ({
                 style={styles.inputIcon}
                 fontSize={16}
                 keyboardType={'default'}
-                autoFocus={true}
+                // autoFocus={true}
                 // value={name}
                 // onChangeText={value => setName(value)}
               />
@@ -70,11 +71,18 @@ const AppModal = ({
 
         <View style={styles.buttonWrapper}>
           <Button
-            text={textButton}
-            backgroundColor={COLORS.GREEN}
+            text={!editMode ? 'CREATE' : 'EDIT'}
+            backgroundColor={!editMode ? COLORS.GREEN : COLORS.AQUA_BLUE}
             onPress={() => {
               onPress();
               setModalVisible(!modalVisible);
+              setValue({
+                id: '',
+                name: '',
+                icon: '🎵',
+                tasks: [],
+              });
+              setEditMode(false);
             }}
             width={146}
             fontSize={18}
@@ -85,6 +93,13 @@ const AppModal = ({
             backgroundColor={COLORS.RED}
             onPress={() => {
               setModalVisible(!modalVisible);
+              setValue({
+                id: '',
+                name: '',
+                icon: '🎵',
+                tasks: [],
+              });
+              setEditMode(false);
             }}
             width={146}
             fontSize={18}
@@ -107,6 +122,8 @@ AppModal.propTypes = {
     tasks: PropTypes.array,
   }),
   setValue: PropTypes.func,
+  setEditMode: PropTypes.func,
+  editMode: PropTypes.bool,
 };
 
 export default AppModal;
