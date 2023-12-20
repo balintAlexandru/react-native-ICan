@@ -9,8 +9,8 @@ import {faXmark} from '@fortawesome/free-solid-svg-icons/faXmark';
 
 import {Button} from '..';
 
-import {useDispatch} from 'react-redux';
-import {deleteCategory} from '../../redux/slices/appSlice';
+import {useDispatch, useSelector} from 'react-redux';
+import {deleteCategory, setTaskCompleted} from '../../redux/slices/appSlice';
 
 import PropTypes from 'prop-types';
 
@@ -23,13 +23,14 @@ const CategoryCard = ({
 }) => {
   const [showSettings, setShowSettings] = useState(false);
   const dispatch = useDispatch();
+  const taskCompleted = useSelector(state => state.app.taskCompleted);
 
   return (
     <TouchableOpacity
       activeOpacity={1}
       style={styles.container}
       onPress={() => {
-        navigation.navigate('Tasks', {category});
+        !showSettings && navigation.navigate('Tasks', {category});
       }}>
       <TouchableOpacity
         activeOpacity={1}
@@ -44,7 +45,36 @@ const CategoryCard = ({
           <Text style={styles.icon}>{category.icon}</Text>
           <View style={styles.infoWrapper}>
             <Text style={styles.name}>{category.name}</Text>
-            <Text style={styles.tasks}>{category.tasks.length} tasks</Text>
+            {category.tasks.filter(item => item.completed).length ===
+              category.tasks.length && category.tasks.length !== 0 ? (
+              <Text
+                style={{
+                  ...styles.tasks,
+                  fontSize: 18,
+                  fontWeight: '500',
+                  color: 'white',
+                  backgroundColor: COLORS.GREEN,
+                  paddingHorizontal: 12,
+                  paddingVertical: 5,
+                  borderRadius: 10,
+                  overflow: 'hidden',
+                  marginTop: 10,
+                }}>
+                Completed !
+              </Text>
+            ) : (
+              <>
+                <Text style={styles.tasks}>
+                  Tasks: {category.tasks.filter(item => !item.completed).length}
+                </Text>
+                {category.tasks.filter(item => item.completed).length !== 0 && (
+                  <Text style={styles.tasksCompleted}>
+                    Completed:{' '}
+                    {category.tasks.filter(item => item.completed).length}
+                  </Text>
+                )}
+              </>
+            )}
           </View>
         </View>
       )}
@@ -67,6 +97,12 @@ const CategoryCard = ({
             text="DELETE"
             backgroundColor={COLORS.RED}
             onPress={() => {
+              dispatch(
+                setTaskCompleted(
+                  taskCompleted -
+                    category.tasks.filter(item => item.completed).length,
+                ),
+              );
               dispatch(deleteCategory({categoryId: category.id}));
             }}
             width={101}

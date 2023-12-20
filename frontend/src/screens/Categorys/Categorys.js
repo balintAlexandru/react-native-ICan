@@ -5,6 +5,7 @@ import {
   View,
   TouchableOpacity,
   ScrollView,
+  StatusBar,
 } from 'react-native';
 
 import uuid from 'react-native-uuid';
@@ -19,8 +20,11 @@ import {faGear} from '@fortawesome/free-solid-svg-icons/faGear';
 import {faBook} from '@fortawesome/free-solid-svg-icons/faBook';
 
 import {AppModal, CategoryCard, AddButton} from '../../components';
+import getCurrentDate from '../../hooks/date';
+import {AnimatedCircularProgress} from 'react-native-circular-progress';
 
 const Categorys = ({navigation}) => {
+  const date = getCurrentDate();
   const [modalVisible, setModalVisible] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [categoryModel, setCategoryModel] = useState({
@@ -29,9 +33,11 @@ const Categorys = ({navigation}) => {
     icon: '',
     tasks: [],
   });
+
   const dispatch = useDispatch();
   const username = useSelector(state => state.app.username);
   const category = useSelector(state => state.app.category);
+  const taskCompleted = useSelector(state => state.app.taskCompleted);
 
   const handleCreateCategory = () => {
     categoryModel.id = uuid.v4();
@@ -48,8 +54,20 @@ const Categorys = ({navigation}) => {
     );
   };
 
+  const handleTotalTasks = () => {
+    if (
+      category.length === 0 ||
+      category.reduce((acc, val) => acc + val.tasks.length, 0) === 0
+    )
+      return '0 tasks';
+    return (
+      '/' + category.reduce((acc, val) => acc + val.tasks.length, 0) + ' tasks'
+    );
+  };
+  console.log(taskCompleted);
   return (
     <SafeAreaView style={styles.safeArea}>
+      <StatusBar barStyle={'dark-content'} />
       <View style={styles.container}>
         <View style={styles.iconWrapper}>
           <TouchableOpacity
@@ -64,7 +82,10 @@ const Categorys = ({navigation}) => {
         <View style={styles.textWrapper}>
           <Text style={styles.title}>Hello {username}</Text>
           <Text style={styles.day}>
-            Sunday, <Text style={styles.date}>12nd May</Text>
+            {date.day},{' '}
+            <Text style={styles.date}>
+              {date.dayNumber} {date.currentMonth}
+            </Text>
           </Text>
         </View>
 
@@ -74,11 +95,55 @@ const Categorys = ({navigation}) => {
               style={{...styles.textContent, fontSize: 24, fontWeight: 600}}>
               Today
             </Text>
-            <Text style={{...styles.textContent, fontSize: 20}}>0 tasks</Text>
+            <Text style={{...styles.textContent, fontSize: 20}}>
+              {category.length !== 0 &&
+                handleTotalTasks().includes('/') &&
+                taskCompleted}
+              {handleTotalTasks()}
+            </Text>
           </View>
 
           <View style={styles.circle}>
-            <Text style={{...styles.textContent, fontSize: 24}}>0%</Text>
+            <AnimatedCircularProgress
+              size={95}
+              width={3}
+              fill={
+                category[0]?.tasks?.length
+                  ? taskCompleted *
+                    Math.ceil(
+                      100 /
+                        category.reduce(
+                          (acc, val) => acc + val.tasks.length,
+                          0,
+                        ),
+                    )
+                  : 0
+              }
+              tintColor="white"
+              backgroundColor={COLORS.GRAY}
+            />
+            <Text
+              style={{
+                ...styles.textContent,
+                fontSize: 24,
+                position: 'absolute',
+              }}>
+              {taskCompleted *
+                Math.ceil(
+                  100 /
+                    category.reduce((acc, val) => acc + val.tasks.length, 0),
+                ) >=
+              99
+                ? 100
+                : category[0]?.tasks?.length
+                ? taskCompleted *
+                  Math.ceil(
+                    100 /
+                      category.reduce((acc, val) => acc + val.tasks.length, 0),
+                  )
+                : 0}
+              %
+            </Text>
           </View>
         </View>
         {category.length === 0 && (

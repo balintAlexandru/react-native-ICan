@@ -73,4 +73,11 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  progress: {
+    fontSize: RFValue(14),
+    letterSpacing: -0.3,
+    fontWeight: '500',
+    color: COLORS.GRAY,
+    fontStyle: 'italic',
+  },
 });

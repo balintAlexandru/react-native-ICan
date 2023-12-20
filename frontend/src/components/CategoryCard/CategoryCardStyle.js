@@ -22,13 +22,17 @@ export const styles = StyleSheet.create({
   },
   iconWrapper: {
     position: 'absolute',
-    right: 10,
-    top: 10,
+    right: 5,
+    top: 5,
+    width: RFValue(25),
+    height: RFValue(25),
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   cardInfo: {
     flex: 1,
     alignItems: 'center',
-    gap: 20,
+    gap: 12,
   },
   icon: {
     marginTop: RFValue(18),
@@ -40,10 +44,17 @@ export const styles = StyleSheet.create({
   name: {
     fontFamily: 'Font',
     letterSpacing: -0.3,
-    fontSize: RFValue(14),
+    fontSize: RFValue(16),
     fontWeight: '500',
   },
   tasks: {
+    fontFamily: 'Font',
+    letterSpacing: -0.3,
+    fontSize: 16,
+    color: COLORS.GRAY,
+    paddingTop: RFValue(5),
+  },
+  tasksCompleted: {
     fontFamily: 'Font',
     letterSpacing: -0.3,
     fontSize: 16,

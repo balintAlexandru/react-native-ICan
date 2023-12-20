@@ -63,7 +63,7 @@ const AppModal = ({
                   keyboardType={'numeric'}
                   placeholder="Hours"
                   placeholderTextColor={COLORS.GRAY}
-                  value={value.hours}
+                  value={value.time.hours || ''}
                   onChangeText={text =>
                     setValue({...value, time: {...value.time, hours: text}})
                   }
@@ -79,7 +79,7 @@ const AppModal = ({
                   keyboardType={'numeric'}
                   placeholder="Minutes"
                   placeholderTextColor={COLORS.GRAY}
-                  value={value.minutes}
+                  value={value.time.minutes || ''}
                   onChangeText={text =>
                     setValue({...value, time: {...value.time, minutes: text}})
                   }

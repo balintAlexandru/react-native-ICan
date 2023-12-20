@@ -1,6 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit';
 
 const initialState = {
+  taskCompleted: 0,
   username: '',
   category: [],
 };
@@ -12,7 +13,9 @@ export const appSlice = createSlice({
     setUsername: (state, action) => {
       state.username = action.payload;
     },
-
+    setTaskCompleted: (state, action) => {
+      state.taskCompleted = action.payload;
+    },
     createCategory: (state, action) => {
       state.category = [...state.category, {...action.payload}];
     },
@@ -36,22 +39,28 @@ export const appSlice = createSlice({
     },
 
     createTask: (state, action) => {
-      const {categoryId, name, time, completed} = action.payload;
+      const {categoryId, name, time, completed, id, playTime} = action.payload;
 
       const position = state.category.findIndex(
         category => category.id === categoryId,
       );
-      state.category[position].tasks.push({name, time, completed});
+      state.category[position].tasks.push({
+        id,
+        name,
+        time,
+        completed,
+        playTime,
+      });
     },
 
     updateTask: (state, action) => {
-      const {categoryName, taskName, name, time} = action.payload;
+      const {categoryId, id, name, time} = action.payload;
 
       const categoryPosition = state.category.findIndex(
-        category => category.name === categoryName,
+        category => category.id === categoryId,
       );
       const taskPosition = state.category[categoryPosition].tasks.findIndex(
-        task => task.name === taskName,
+        task => task.id === id,
       );
 
       state.category[categoryPosition].tasks[taskPosition].name = name;
@@ -59,15 +68,42 @@ export const appSlice = createSlice({
     },
 
     deleteTask: (state, action) => {
-      const {categoryName, name} = action.payload;
+      const {categoryId, id} = action.payload;
 
       const position = state.category.findIndex(
-        category => category.name === categoryName,
+        category => category.id === categoryId,
       );
 
       state.category[position].tasks = state.category[position].tasks.filter(
-        task => task.name !== name,
+        task => task.id !== id,
       );
+    },
+
+    checkTask: (state, action) => {
+      const {categoryId, id} = action.payload;
+
+      const categoryPosition = state.category.findIndex(
+        category => category.id === categoryId,
+      );
+      const taskPosition = state.category[categoryPosition].tasks.findIndex(
+        task => task.id === id,
+      );
+
+      state.category[categoryPosition].tasks[taskPosition].completed =
+        !state.category[categoryPosition].tasks[taskPosition].completed;
+    },
+    startTaskTime: (state, action) => {
+      const {categoryId, id} = action.payload;
+
+      const categoryPosition = state.category.findIndex(
+        category => category.id === categoryId,
+      );
+      const taskPosition = state.category[categoryPosition].tasks.findIndex(
+        task => task.id === id,
+      );
+
+      state.category[categoryPosition].tasks[taskPosition].playTime =
+        !state.category[categoryPosition].tasks[taskPosition].playTime;
     },
   },
 });
@@ -80,6 +116,9 @@ export const {
   updateTask,
   updateCategory,
   deleteCategory,
+  checkTask,
+  setTaskCompleted,
+  startTaskTime,
 } = appSlice.actions;
 
 export default appSlice.reducer;

@@ -73,11 +73,9 @@ export const styles = StyleSheet.create({
     paddingBottom: RFValue(30),
   },
   circle: {
-    borderColor: 'white',
-    borderWidth: 2,
+    position: 'relative',
     width: 95,
     height: 95,
-    borderRadius: 50,
     alignItems: 'center',
     justifyContent: 'center',
   },

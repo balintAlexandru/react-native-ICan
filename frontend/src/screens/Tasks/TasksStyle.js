@@ -42,4 +42,18 @@ export const styles = StyleSheet.create({
     flex: 1,
     marginBottom: RFValue(40),
   },
+  taskInfo: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 20,
+  },
+  infoText: {
+    fontFamily: 'Font',
+    fontSize: RFValue(16),
+    fontWeight: '400',
+    letterSpacing: -0.3,
+    color: COLORS.GRAY,
+    textAlign: 'center',
+  },
 });

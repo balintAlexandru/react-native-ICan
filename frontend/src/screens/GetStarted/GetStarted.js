@@ -1,19 +1,19 @@
-import { useState } from "react";
-import { SafeAreaView, Text, View, TextInput } from "react-native";
+import {useState} from 'react';
+import {SafeAreaView, Text, View, TextInput} from 'react-native';
 
-import { styles } from "./GetStartedStyle";
-import { COLORS } from "../../constants/colors";
+import {styles} from './GetStartedStyle';
+import {COLORS} from '../../constants/colors';
 
-import { Button } from "../../components";
+import {Button} from '../../components';
 
-import { setUsername } from "../../redux/slices/appSlice";
-import { useDispatch, useSelector } from "react-redux";
+import {setUsername} from '../../redux/slices/appSlice';
+import {useDispatch, useSelector} from 'react-redux';
 
 const GetStarted = () => {
   const dispatch = useDispatch();
-  const [name, setName] = useState("");
-  const count = useSelector((state) => state.app.username);
-  console.log("name>>>>", count);
+  const [name, setName] = useState('');
+  const count = useSelector(state => state.app.username);
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
@@ -24,21 +24,20 @@ const GetStarted = () => {
           fontSize={16}
           placeholder="Write name here"
           placeholderTextColor={styles.GRAY}
-          keyboardType={"default"}
+          keyboardType={'default'}
           autoFocus={true}
           value={name}
-          onChangeText={(value) => setName(value)}
+          onChangeText={value => setName(value)}
         />
         <Button
           text="GET STARTED"
           backgroundColor={COLORS.RED}
           onPress={() => {
-            if (name !== "") {
-              console.log(name);
+            if (name !== '') {
               dispatch(setUsername(name));
             }
           }}
-          width={"100%"}
+          width={'100%'}
           fontSize={18}
           paddingVertical={12}
         />

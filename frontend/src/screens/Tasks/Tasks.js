@@ -14,10 +14,16 @@ import {COLORS} from '../../constants/colors';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faArrowLeft} from '@fortawesome/free-solid-svg-icons/faArrowLeft';
 import {faGear} from '@fortawesome/free-solid-svg-icons/faGear';
+import {faBook} from '@fortawesome/free-solid-svg-icons/faBook';
 
 import {AddButton, AppModal, TaskCard} from '../../components';
 
-import {createTask} from '../../redux/slices/appSlice';
+import {
+  createTask,
+  updateTask,
+  checkTask,
+  startTaskTime,
+} from '../../redux/slices/appSlice';
 import {useDispatch, useSelector} from 'react-redux';
 
 const Tasks = ({route, navigation}) => {
@@ -34,28 +40,37 @@ const Tasks = ({route, navigation}) => {
       minutes: 0,
     },
     completed: false,
+    playTime: false,
   });
 
   const categorys = useSelector(state => state.app.category);
   const dispatch = useDispatch();
   const tasks = categorys.filter(item => item.id === id)[0].tasks;
-
   console.log(tasks);
   const handleCreateTask = () => {
     taskModel.id = uuid.v4();
     dispatch(createTask({...taskModel, categoryId: id}));
   };
 
-  const handleEditCategory = () => {
+  const handleEditTask = () => {
     dispatch(
-      updateCategory({
-        categoryId: categoryModel.id,
-        name: categoryModel.name,
-        icon: categoryModel.icon,
+      updateTask({
+        categoryId: id,
+        id: taskModel.id,
+        name: taskModel.name,
+        time: taskModel.time,
+        playTime: taskModel.playTime,
       }),
     );
   };
 
+  const handleCheck = taskId => {
+    dispatch(checkTask({categoryId: id, id: taskId}));
+  };
+
+  const handleStartTime = taskId => {
+    dispatch(startTaskTime({categoryId: id, id: taskId}));
+  };
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
@@ -81,11 +96,32 @@ const Tasks = ({route, navigation}) => {
         </View>
 
         <View style={styles.tasksList}>
-          <FlatList
-            data={tasks}
-            renderItem={({item}) => <TaskCard task={item} />}
-            keyExtractor={item => item.id}
-          />
+          {tasks.length === 0 && (
+            <View style={styles.taskInfo}>
+              <FontAwesomeIcon icon={faBook} color={COLORS.GRAY} size={40} />
+              <Text style={styles.infoText}>
+                Look's like you don't have any tasks yet.
+              </Text>
+            </View>
+          )}
+          {tasks.length !== 0 && (
+            <FlatList
+              data={tasks}
+              renderItem={({item}, index) => (
+                <TaskCard
+                  task={item}
+                  key={index}
+                  categoryId={id}
+                  setModalVisible={setModalVisible}
+                  setTaskModel={setTaskModel}
+                  setEditMode={setEditMode}
+                  handleCheck={handleCheck}
+                  handleStartTime={handleStartTime}
+                />
+              )}
+              keyExtractor={() => Math.random()}
+            />
+          )}
         </View>
 
         <AddButton onPress={setModalVisible} />
@@ -93,11 +129,11 @@ const Tasks = ({route, navigation}) => {
         <AppModal
           modalVisible={modalVisible}
           setModalVisible={setModalVisible}
-          title="Add Task"
+          title={!editMode ? 'Add Task' : 'Edit Task'}
           type="tasks"
           value={taskModel}
           setValue={setTaskModel}
-          onPress={!editMode ? handleCreateTask : () => {}}
+          onPress={!editMode ? handleCreateTask : handleEditTask}
           editMode={editMode}
           setEditMode={setEditMode}
         />
