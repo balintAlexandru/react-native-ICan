@@ -61,9 +61,10 @@ export const styles = StyleSheet.create({
     color: COLORS.GRAY,
   },
   buttonsWrapper: {
+    paddingTop: RFValue(20),
     justifyContent: 'center',
     alignContent: 'center',
-    gap: 32,
+    gap: 15,
     flex: 1,
   },
 });

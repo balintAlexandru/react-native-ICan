@@ -64,7 +64,7 @@ const Categorys = ({navigation}) => {
       '/' + category.reduce((acc, val) => acc + val.tasks.length, 0) + ' tasks'
     );
   };
-  console.log(taskCompleted);
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <StatusBar barStyle={'dark-content'} />

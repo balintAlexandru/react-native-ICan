@@ -5,6 +5,7 @@ import {store, persistor} from './redux/store';
 
 import {SplashScreen} from './screens';
 import AppNavigation from './navigation/AppNavigation';
+import Test from './screens/Test';
 
 const App = () => {
   const [showSplashScreen, setShowSplashScreen] = useState(true);
@@ -18,6 +19,8 @@ const App = () => {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
+        {/* <Test />
+        <Test /> */}
         {showSplashScreen && <SplashScreen />}
         {!showSplashScreen && <AppNavigation />}
       </PersistGate>

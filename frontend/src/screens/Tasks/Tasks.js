@@ -46,7 +46,7 @@ const Tasks = ({route, navigation}) => {
   const categorys = useSelector(state => state.app.category);
   const dispatch = useDispatch();
   const tasks = categorys.filter(item => item.id === id)[0].tasks;
-  console.log(tasks);
+
   const handleCreateTask = () => {
     taskModel.id = uuid.v4();
     dispatch(createTask({...taskModel, categoryId: id}));

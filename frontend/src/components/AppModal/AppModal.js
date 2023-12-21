@@ -55,10 +55,18 @@ const AppModal = ({
 
           {type === 'tasks' && (
             <View style={styles.timeWrapper}>
-              <Text style={styles.label}>Time</Text>
+              <Text style={styles.label}>
+                Time <Text style={{color: COLORS.GRAY}}>(Optional)</Text>
+              </Text>
               <View style={styles.timeInputWrapper}>
                 <TextInput
-                  style={{...styles.input, borderRadius: 0, width: '50%'}}
+                  style={{
+                    ...styles.input,
+                    borderRadius: 0,
+                    width: '50%',
+                    borderTopLeftRadius: 10,
+                    borderBottomLeftRadius: 10,
+                  }}
                   fontSize={16}
                   keyboardType={'numeric'}
                   placeholder="Hours"
@@ -74,6 +82,8 @@ const AppModal = ({
                     borderRadius: 0,
                     width: '50%',
                     borderLeftWidth: 0,
+                    borderTopRightRadius: 10,
+                    borderBottomRightRadius: 10,
                   }}
                   fontSize={16}
                   keyboardType={'numeric'}

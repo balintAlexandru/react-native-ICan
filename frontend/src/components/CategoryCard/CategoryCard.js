@@ -13,6 +13,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {deleteCategory, setTaskCompleted} from '../../redux/slices/appSlice';
 
 import PropTypes from 'prop-types';
+import {RFValue} from 'react-native-responsive-fontsize';
 
 const CategoryCard = ({
   category,
@@ -49,16 +50,12 @@ const CategoryCard = ({
               category.tasks.length && category.tasks.length !== 0 ? (
               <Text
                 style={{
-                  ...styles.tasks,
-                  fontSize: 18,
+                  fontSize: RFValue(16),
+                  letterSpacing: -0.3,
                   fontWeight: '500',
-                  color: 'white',
-                  backgroundColor: COLORS.GREEN,
-                  paddingHorizontal: 12,
-                  paddingVertical: 5,
-                  borderRadius: 10,
-                  overflow: 'hidden',
-                  marginTop: 10,
+                  color: COLORS.GRAY,
+                  fontStyle: 'italic',
+                  marginTop: 5,
                 }}>
                 Completed !
               </Text>
@@ -89,7 +86,7 @@ const CategoryCard = ({
               setShowSettings(false);
               setEditMode(true);
             }}
-            width={101}
+            width={120}
             fontSize={16}
             paddingVertical={6}
           />
@@ -105,7 +102,7 @@ const CategoryCard = ({
               );
               dispatch(deleteCategory({categoryId: category.id}));
             }}
-            width={101}
+            width={120}
             fontSize={16}
             paddingVertical={6}
           />
