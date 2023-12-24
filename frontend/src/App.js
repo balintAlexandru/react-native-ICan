@@ -19,8 +19,7 @@ const App = () => {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        {/* <Test />
-        <Test /> */}
+        {/* <Test /> */}
         {showSplashScreen && <SplashScreen />}
         {!showSplashScreen && <AppNavigation />}
       </PersistGate>
