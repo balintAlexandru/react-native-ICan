@@ -38,7 +38,7 @@ const TaskCard = ({
     if (time.hours === 0) return ` ${time.minutes} minutes`;
     return ` ${time.hours} hours ${time.minutes} minutes`;
   };
-
+  console.log(playTime);
   return (
     <View style={styles.container}>
       <View style={styles.taskWrapper}>

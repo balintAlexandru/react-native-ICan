@@ -32,7 +32,6 @@ const AppModal = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [icon, setIcon] = useState('');
-  const [error, setError] = useState(false);
 
   return (
     <Modal animationType="slide" transparent={true} visible={modalVisible}>
@@ -44,64 +43,15 @@ const AppModal = ({
           <Text style={styles.title}>{title}</Text>
 
           <View style={styles.nameWrapper}>
-            <Text style={styles.label}>
-              Name{' '}
-              <Text style={{color: COLORS.GRAY}}>
-                {error && value.name.length === 0
-                  ? '(Please complete all fields)'
-                  : value.name.length <= 16
-                  ? '(Max. 16 letters)'
-                  : '(Too many letters)'}
-              </Text>
-            </Text>
+            <Text style={styles.label}>Name</Text>
             <TextInput
-              style={{
-                ...styles.input,
-                borderColor:
-                  error && value.name.length === 0
-                    ? COLORS.RED
-                    : value.name.length <= 16
-                    ? COLORS.GRAY
-                    : COLORS.RED,
-              }}
+              style={styles.input}
               fontSize={16}
               keyboardType={'default'}
               value={value.name}
               onChangeText={text => setValue({...value, name: text})}
             />
           </View>
-
-          {type === 'categorys' && (
-            <View style={styles.iconWrapper}>
-              <Text style={styles.label}>
-                Icon{' '}
-                <Text style={{color: COLORS.GRAY}}>
-                  {error && value.icon === ''
-                    ? '(Please complete all fields)'
-                    : ''}
-                </Text>
-              </Text>
-              <TouchableOpacity
-                activeOpacity={1}
-                style={{
-                  ...styles.iconContainer,
-                  borderColor:
-                    error && value.icon === '' ? COLORS.RED : COLORS.GRAY,
-                }}
-                onPress={() => {
-                  Keyboard.dismiss();
-                  setIsOpen(true);
-                }}>
-                {!editMode && icon === '' && (
-                  <FontAwesomeIcon icon={faPlus} size={25} />
-                )}
-                {icon !== '' && <Text style={styles.icon}>{icon}</Text>}
-                {editMode && icon === '' && (
-                  <Text style={styles.icon}>{value.icon}</Text>
-                )}
-              </TouchableOpacity>
-            </View>
-          )}
 
           {type === 'tasks' && (
             <View style={styles.timeWrapper}>
@@ -116,7 +66,6 @@ const AppModal = ({
                     width: '50%',
                     borderTopLeftRadius: 10,
                     borderBottomLeftRadius: 10,
-                    borderColor: COLORS.GRAY,
                   }}
                   fontSize={16}
                   keyboardType={'numeric'}
@@ -135,7 +84,6 @@ const AppModal = ({
                     borderLeftWidth: 0,
                     borderTopRightRadius: 10,
                     borderBottomRightRadius: 10,
-                    borderColor: COLORS.GRAY,
                   }}
                   fontSize={16}
                   keyboardType={'numeric'}
@@ -150,24 +98,36 @@ const AppModal = ({
             </View>
           )}
 
+          {type === 'categorys' && (
+            <View style={styles.iconWrapper}>
+              <Text style={styles.label}>Icon</Text>
+              <TouchableOpacity
+                activeOpacity={1}
+                style={styles.iconContainer}
+                onPress={() => {
+                  Keyboard.dismiss();
+                  setIsOpen(true);
+                }}>
+                {!editMode && icon === '' && (
+                  <FontAwesomeIcon icon={faPlus} size={25} />
+                )}
+                {icon !== '' && <Text style={styles.icon}>{icon}</Text>}
+                {editMode && icon === '' && (
+                  <Text style={styles.icon}>{value.icon}</Text>
+                )}
+              </TouchableOpacity>
+            </View>
+          )}
+
           <View style={styles.buttonWrapper}>
             <Button
               text={!editMode ? 'CREATE' : 'EDIT'}
               backgroundColor={!editMode ? COLORS.GREEN : COLORS.AQUA_BLUE}
               onPress={() => {
-                if (
-                  value.name === '' ||
-                  value.icon === '' ||
-                  value.name.length > 16
-                ) {
-                  setError(true);
-                  setTimeout(() => {
-                    setError(false);
-                  }, 1500);
-                } else if (type === 'categorys') {
-                  onPress();
-                  setModalVisible(!modalVisible);
-                  setEditMode(false);
+                onPress();
+                setModalVisible(!modalVisible);
+                setEditMode(false);
+                if (type === 'categorys') {
                   setValue({
                     id: '',
                     name: '',
@@ -176,10 +136,7 @@ const AppModal = ({
                   });
                   setIcon('');
                 }
-                if (type === 'tasks' && value.name !== '') {
-                  onPress();
-                  setModalVisible(!modalVisible);
-                  setEditMode(false);
+                if (type === 'tasks') {
                   setValue({
                     name: '',
                     time: {

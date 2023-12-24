@@ -37,6 +37,7 @@ export const styles = StyleSheet.create({
     fontSize: RFValue(16),
   },
   input: {
+    borderColor: COLORS.GRAY,
     borderWidth: 2,
     borderRadius: 10,
     paddingVertical: RFValue(12),
@@ -52,6 +53,7 @@ export const styles = StyleSheet.create({
   iconContainer: {
     position: 'relative',
     borderWidth: 2,
+    borderColor: COLORS.GRAY,
     width: 80,
     height: 80,
     borderRadius: 50,
