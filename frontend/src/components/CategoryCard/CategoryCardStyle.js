@@ -28,6 +28,7 @@ export const styles = StyleSheet.create({
     height: RFValue(25),
     justifyContent: 'center',
     alignItems: 'center',
+    borderWidth: 1,
   },
   cardInfo: {
     flex: 1,
