@@ -21,6 +21,9 @@ const CategoryCard = ({
   setCategoryModel,
   setEditMode,
   navigation,
+  startTimer,
+  stopTimer,
+  setMinutesLeft,
 }) => {
   const [showSettings, setShowSettings] = useState(false);
   const dispatch = useDispatch();
@@ -31,7 +34,13 @@ const CategoryCard = ({
       activeOpacity={1}
       style={styles.container}
       onPress={() => {
-        !showSettings && navigation.navigate('Tasks', {category});
+        !showSettings &&
+          navigation.navigate('Tasks', {
+            category,
+            startTimer,
+            stopTimer,
+            setMinutesLeft,
+          });
       }}>
       <TouchableOpacity
         activeOpacity={1}

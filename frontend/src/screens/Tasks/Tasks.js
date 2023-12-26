@@ -27,7 +27,7 @@ import {
 import {useDispatch, useSelector} from 'react-redux';
 
 const Tasks = ({route, navigation}) => {
-  const {category} = route.params;
+  const {category, startTimer, stopTimer, setMinutesLeft} = route.params;
   const {id, name, icon} = category;
 
   const [modalVisible, setModalVisible] = useState(false);
@@ -71,6 +71,7 @@ const Tasks = ({route, navigation}) => {
   const handleStartTime = taskId => {
     dispatch(startTaskTime({categoryId: id, id: taskId}));
   };
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
@@ -117,6 +118,9 @@ const Tasks = ({route, navigation}) => {
                   setEditMode={setEditMode}
                   handleCheck={handleCheck}
                   handleStartTime={handleStartTime}
+                  startTimer={startTimer}
+                  stopTimer={stopTimer}
+                  setMinutesLeft={setMinutesLeft}
                 />
               )}
               keyExtractor={() => Math.random()}

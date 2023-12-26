@@ -12,8 +12,14 @@ import {faCheck} from '@fortawesome/free-solid-svg-icons/faCheck';
 import {faClock} from '@fortawesome/free-solid-svg-icons/faClock';
 import {faCirclePause} from '@fortawesome/free-solid-svg-icons/faCirclePause';
 
+import {convertTimeStringToMinutes} from '../../hooks/task';
+
 import {useDispatch, useSelector} from 'react-redux';
-import {deleteTask, setTaskCompleted} from '../../redux/slices/appSlice';
+import {
+  deleteTask,
+  setTaskCompleted,
+  startTaskTime,
+} from '../../redux/slices/appSlice';
 
 import PropTypes from 'prop-types';
 
@@ -25,8 +31,12 @@ const TaskCard = ({
   setEditMode,
   handleCheck,
   handleStartTime,
+  stopTimer,
+  startTimer,
+  setMinutesLeft,
 }) => {
   const {id, name, time, completed, playTime} = task;
+
   const [showSettings, setShowSettings] = useState(false);
 
   const dispatch = useDispatch();
@@ -34,9 +44,9 @@ const TaskCard = ({
 
   const renderHourFormat = time => {
     if (time.hours === 0 && time.minutes === 0) return ' Unlimited';
-    if (time.minutes === 0) return ` ${time.hours} hours`;
-    if (time.hours === 0) return ` ${time.minutes} minutes`;
-    return ` ${time.hours} hours ${time.minutes} minutes`;
+    if (time.minutes === 0) return `${time.hours} hours`;
+    if (time.hours === 0) return `${time.minutes} minutes`;
+    return `${time.hours} hours ${time.minutes} minutes`;
   };
 
   return (
@@ -50,8 +60,8 @@ const TaskCard = ({
                 completed ? taskCompleted - 1 : taskCompleted + 1,
               ),
             );
-            handleCheck(id);
-            if (playTime) handleStartTime(id);
+            // handleCheck(id);
+            // if (playTime) handleStartTime(id);
           }}
           style={{
             ...styles.radioWrapper,
@@ -73,10 +83,13 @@ const TaskCard = ({
           {playTime && !completed && (
             <Text style={styles.progress}>In progress...</Text>
           )}
-          <Text style={styles.timeText}>
-            Time:
-            <Text style={styles.time}>{renderHourFormat(time)}</Text>
-          </Text>
+          {!completed && (
+            <Text style={styles.timeText}>
+              Time:
+              <Text style={styles.time}>{renderHourFormat(time)}</Text>
+            </Text>
+          )}
+          {completed && <Text style={styles.time}>Task done</Text>}
         </View>
         <TouchableOpacity
           style={styles.dots}
@@ -107,7 +120,16 @@ const TaskCard = ({
             <TouchableOpacity
               activeOpacity={1}
               onPress={() => {
-                handleStartTime(id);
+                if (!playTime) {
+                  dispatch(startTaskTime({categoryId, id}));
+                  setMinutesLeft(
+                    convertTimeStringToMinutes(renderHourFormat(time)),
+                  );
+                  startTimer(categoryId, id);
+                } else {
+                  dispatch(startTaskTime({categoryId, id}));
+                  stopTimer(categoryId, id);
+                }
               }}>
               {!playTime && (
                 <FontAwesomeIcon

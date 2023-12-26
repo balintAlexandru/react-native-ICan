@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {
   SafeAreaView,
   Text,
@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ScrollView,
   StatusBar,
+  LogBox,
 } from 'react-native';
 
 import uuid from 'react-native-uuid';
@@ -20,10 +21,14 @@ import {faGear} from '@fortawesome/free-solid-svg-icons/faGear';
 import {faBook} from '@fortawesome/free-solid-svg-icons/faBook';
 
 import {AppModal, CategoryCard, AddButton} from '../../components';
-import getCurrentDate from '../../hooks/date';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
 
-const Categorys = ({navigation}) => {
+import getCurrentDate from '../../hooks/date';
+
+LogBox.ignoreAllLogs();
+
+const Categorys = ({route, navigation}) => {
+  const {startTimer, stopTimer, setMinutesLeft} = route.params;
   const date = getCurrentDate();
   const [modalVisible, setModalVisible] = useState(false);
   const [editMode, setEditMode] = useState(false);
@@ -167,6 +172,9 @@ const Categorys = ({navigation}) => {
                 setCategoryModel={setCategoryModel}
                 setEditMode={setEditMode}
                 navigation={navigation}
+                startTimer={startTimer}
+                stopTimer={stopTimer}
+                setMinutesLeft={setMinutesLeft}
               />
             ))}
           </ScrollView>

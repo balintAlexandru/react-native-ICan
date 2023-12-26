@@ -4,6 +4,7 @@ const initialState = {
   taskCompleted: 0,
   username: '',
   category: [],
+  startTime: false,
 };
 
 export const appSlice = createSlice({
@@ -105,6 +106,20 @@ export const appSlice = createSlice({
       state.category[categoryPosition].tasks[taskPosition].playTime =
         !state.category[categoryPosition].tasks[taskPosition].playTime;
     },
+    updateTimer: (state, action) => {
+      const {categoryId, id, minutesLeft} = action.payload;
+
+      const categoryPosition = state.category.findIndex(
+        category => category.id === categoryId,
+      );
+      const taskPosition = state.category[categoryPosition].tasks.findIndex(
+        task => task.id === id,
+      );
+      state.category[categoryPosition].tasks[taskPosition].time.hours =
+        minutesLeft[0];
+      state.category[categoryPosition].tasks[taskPosition].time.minutes =
+        minutesLeft[1];
+    },
   },
 });
 
@@ -119,6 +134,7 @@ export const {
   checkTask,
   setTaskCompleted,
   startTaskTime,
+  updateTimer,
 } = appSlice.actions;
 
 export default appSlice.reducer;
