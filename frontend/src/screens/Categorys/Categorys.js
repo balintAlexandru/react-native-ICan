@@ -161,6 +161,9 @@ const Categorys = ({route, navigation}) => {
           </View>
         )}
         {category.length !== 0 && (
+          <Text style={styles.categoryTitle}>Categorys</Text>
+        )}
+        {category.length !== 0 && (
           <ScrollView
             style={styles.categorysList}
             contentContainerStyle={styles.listContent}>

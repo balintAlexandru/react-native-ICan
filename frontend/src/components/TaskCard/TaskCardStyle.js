@@ -57,7 +57,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     paddingHorizontal: RFValue(20),
     paddingVertical: RFValue(20),
-    gap: 40,
+    gap: 30,
   },
   taskWrapper: {
     flexDirection: 'row',

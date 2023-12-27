@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: RFValue(24),
-    paddingTop: RFValue(15),
+    paddingTop: RFValue(10),
     paddingBottom: RFValue(10),
   },
   iconWrapper: {
@@ -18,7 +18,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   textWrapper: {
-    marginTop: RFValue(20),
+    marginTop: RFValue(5),
   },
   title: {
     fontFamily: 'Font',
@@ -55,13 +55,21 @@ export const styles = StyleSheet.create({
     fontFamily: 'Font',
     letterSpacing: -0.3,
   },
+  categoryTitle: {
+    gap: 10,
+    fontFamily: 'Font',
+    letterSpacing: -0.3,
+    marginTop: 20,
+    fontWeight: '600',
+    fontSize: RFValue(18),
+  },
   textContent: {
     color: 'white',
   },
   categorysList: {
     width: '100%',
-    marginTop: RFValue(15),
-    marginBottom: RFValue(40),
+    marginTop: RFValue(5),
+    marginBottom: RFValue(30),
   },
 
   listContent: {

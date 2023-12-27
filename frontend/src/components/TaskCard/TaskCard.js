@@ -60,8 +60,8 @@ const TaskCard = ({
                 completed ? taskCompleted - 1 : taskCompleted + 1,
               ),
             );
-            // handleCheck(id);
-            // if (playTime) handleStartTime(id);
+            handleCheck(id);
+            if (playTime) handleStartTime(id);
           }}
           style={{
             ...styles.radioWrapper,

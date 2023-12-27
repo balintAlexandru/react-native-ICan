@@ -24,11 +24,10 @@ export const styles = StyleSheet.create({
     position: 'absolute',
     right: 5,
     top: 5,
-    width: RFValue(25),
-    height: RFValue(25),
+    width: RFValue(35),
+    height: RFValue(35),
     justifyContent: 'center',
     alignItems: 'center',
-    borderWidth: 1,
   },
   cardInfo: {
     flex: 1,

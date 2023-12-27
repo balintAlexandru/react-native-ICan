@@ -3,8 +3,15 @@ import {COLORS} from '../../constants/colors';
 import {RFValue} from 'react-native-responsive-fontsize';
 
 export const styles = StyleSheet.create({
+  modalWrapper: {
+    height: '100%',
+  },
+  closeContainer: {
+    width: '100%',
+    height: '50%',
+  },
   container: {
-    height: '77%',
+    height: '80%',
     backgroundColor: 'white',
     bottom: 0,
     position: 'absolute',

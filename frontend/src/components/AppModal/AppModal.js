@@ -34,207 +34,226 @@ const AppModal = ({
   const [icon, setIcon] = useState('');
   const [error, setError] = useState(false);
 
+  const handleBorderColor = () => {
+    if (type === 'categorys') {
+      return error && value.name.length === 0
+        ? COLORS.RED
+        : value.name.length <= 12
+        ? COLORS.GRAY
+        : COLORS.RED;
+    } else {
+      return error && value.name.length === 0 ? COLORS.RED : COLORS.GRAY;
+    }
+  };
   return (
     <Modal animationType="slide" transparent={true} visible={modalVisible}>
-      <TouchableWithoutFeedback
-        onPress={() => {
-          Keyboard.dismiss();
-        }}>
-        <View style={styles.container}>
-          <Text style={styles.title}>{title}</Text>
+      <View style={styles.modalWrapper}>
+        <TouchableWithoutFeedback
+          onPress={() => {
+            setModalVisible(!modalVisible);
+          }}>
+          <View style={styles.closeContainer}></View>
+        </TouchableWithoutFeedback>
 
-          <View style={styles.nameWrapper}>
-            <Text style={styles.label}>
-              Name{' '}
-              <Text style={{color: COLORS.GRAY}}>
-                {error && value.name.length === 0
-                  ? '(Please complete all fields)'
-                  : value.name.length <= 16
-                  ? '(Max. 16 letters)'
-                  : '(Too many letters)'}
-              </Text>
-            </Text>
-            <TextInput
-              style={{
-                ...styles.input,
-                borderColor:
-                  error && value.name.length === 0
-                    ? COLORS.RED
-                    : value.name.length <= 16
-                    ? COLORS.GRAY
-                    : COLORS.RED,
-              }}
-              fontSize={16}
-              keyboardType={'default'}
-              value={value.name}
-              onChangeText={text => setValue({...value, name: text})}
-            />
-          </View>
+        <TouchableWithoutFeedback
+          onPress={() => {
+            Keyboard.dismiss();
+          }}>
+          <View style={styles.container}>
+            <Text style={styles.title}>{title}</Text>
 
-          {type === 'categorys' && (
-            <View style={styles.iconWrapper}>
+            <View style={styles.nameWrapper}>
               <Text style={styles.label}>
-                Icon{' '}
+                Name{' '}
                 <Text style={{color: COLORS.GRAY}}>
-                  {error && value.icon === ''
+                  {type === 'tasks' && error && value.name.length === 0
                     ? '(Please complete all fields)'
                     : ''}
+                  {type === 'categorys' &&
+                    (error && value.name.length === 0
+                      ? '(Please complete all fields)'
+                      : value.name.length <= 12
+                      ? '(Max. 12 letters)'
+                      : '(Too many letters)')}
                 </Text>
               </Text>
-              <TouchableOpacity
-                activeOpacity={1}
+              <TextInput
                 style={{
-                  ...styles.iconContainer,
-                  borderColor:
-                    error && value.icon === '' ? COLORS.RED : COLORS.GRAY,
+                  ...styles.input,
+                  borderColor: handleBorderColor(),
                 }}
-                onPress={() => {
-                  Keyboard.dismiss();
-                  setIsOpen(true);
-                }}>
-                {!editMode && icon === '' && (
-                  <FontAwesomeIcon icon={faPlus} size={25} />
-                )}
-                {icon !== '' && <Text style={styles.icon}>{icon}</Text>}
-                {editMode && icon === '' && (
-                  <Text style={styles.icon}>{value.icon}</Text>
-                )}
-              </TouchableOpacity>
+                fontSize={16}
+                keyboardType={'default'}
+                value={value.name}
+                onChangeText={text => setValue({...value, name: text})}
+              />
             </View>
-          )}
 
-          {type === 'tasks' && (
-            <View style={styles.timeWrapper}>
-              <Text style={styles.label}>
-                Time <Text style={{color: COLORS.GRAY}}>(Optional)</Text>
-              </Text>
-              <View style={styles.timeInputWrapper}>
-                <TextInput
+            {type === 'categorys' && (
+              <View style={styles.iconWrapper}>
+                <Text style={styles.label}>
+                  Icon{' '}
+                  <Text style={{color: COLORS.GRAY}}>
+                    {error && value.icon === ''
+                      ? '(Please complete all fields)'
+                      : ''}
+                  </Text>
+                </Text>
+                <TouchableOpacity
+                  activeOpacity={1}
                   style={{
-                    ...styles.input,
-                    borderRadius: 0,
-                    width: '50%',
-                    borderTopLeftRadius: 10,
-                    borderBottomLeftRadius: 10,
-                    borderColor: COLORS.GRAY,
+                    ...styles.iconContainer,
+                    borderColor:
+                      error && value.icon === '' ? COLORS.RED : COLORS.GRAY,
                   }}
-                  fontSize={16}
-                  keyboardType={'numeric'}
-                  placeholder="Hours"
-                  placeholderTextColor={COLORS.GRAY}
-                  value={value.time.hours || ''}
-                  onChangeText={text =>
-                    setValue({...value, time: {...value.time, hours: text}})
-                  }
-                />
-                <TextInput
-                  style={{
-                    ...styles.input,
-                    borderRadius: 0,
-                    width: '50%',
-                    borderLeftWidth: 0,
-                    borderTopRightRadius: 10,
-                    borderBottomRightRadius: 10,
-                    borderColor: COLORS.GRAY,
-                  }}
-                  fontSize={16}
-                  keyboardType={'numeric'}
-                  placeholder="Minutes"
-                  placeholderTextColor={COLORS.GRAY}
-                  value={value.time.minutes || ''}
-                  onChangeText={text =>
-                    setValue({...value, time: {...value.time, minutes: text}})
-                  }
-                />
+                  onPress={() => {
+                    Keyboard.dismiss();
+                    setIsOpen(true);
+                  }}>
+                  {!editMode && icon === '' && (
+                    <FontAwesomeIcon icon={faPlus} size={25} />
+                  )}
+                  {icon !== '' && <Text style={styles.icon}>{icon}</Text>}
+                  {editMode && icon === '' && (
+                    <Text style={styles.icon}>{value.icon}</Text>
+                  )}
+                </TouchableOpacity>
               </View>
-            </View>
-          )}
+            )}
 
-          <View style={styles.buttonWrapper}>
-            <Button
-              text={!editMode ? 'CREATE' : 'EDIT'}
-              backgroundColor={!editMode ? COLORS.GREEN : COLORS.AQUA_BLUE}
-              onPress={() => {
-                if (
-                  value.name === '' ||
-                  value.icon === '' ||
-                  value.name.length > 16
-                ) {
-                  setError(true);
-                  setTimeout(() => {
-                    setError(false);
-                  }, 1500);
-                } else if (type === 'categorys') {
-                  onPress();
+            {type === 'tasks' && (
+              <View style={styles.timeWrapper}>
+                <Text style={styles.label}>
+                  Time <Text style={{color: COLORS.GRAY}}>(Optional)</Text>
+                </Text>
+                <View style={styles.timeInputWrapper}>
+                  <TextInput
+                    style={{
+                      ...styles.input,
+                      borderRadius: 0,
+                      width: '50%',
+                      borderTopLeftRadius: 10,
+                      borderBottomLeftRadius: 10,
+                      borderColor: COLORS.GRAY,
+                    }}
+                    fontSize={16}
+                    keyboardType={'numeric'}
+                    placeholder="Hours"
+                    placeholderTextColor={COLORS.GRAY}
+                    value={value.time.hours || ''}
+                    onChangeText={text =>
+                      setValue({...value, time: {...value.time, hours: text}})
+                    }
+                  />
+                  <TextInput
+                    style={{
+                      ...styles.input,
+                      borderRadius: 0,
+                      width: '50%',
+                      borderLeftWidth: 0,
+                      borderTopRightRadius: 10,
+                      borderBottomRightRadius: 10,
+                      borderColor: COLORS.GRAY,
+                    }}
+                    fontSize={16}
+                    keyboardType={'numeric'}
+                    placeholder="Minutes"
+                    placeholderTextColor={COLORS.GRAY}
+                    value={value.time.minutes || ''}
+                    onChangeText={text =>
+                      setValue({...value, time: {...value.time, minutes: text}})
+                    }
+                  />
+                </View>
+              </View>
+            )}
+
+            <View style={styles.buttonWrapper}>
+              <Button
+                text={!editMode ? 'CREATE' : 'EDIT'}
+                backgroundColor={!editMode ? COLORS.GREEN : COLORS.AQUA_BLUE}
+                onPress={() => {
+                  if (
+                    value.name === '' ||
+                    value.icon === '' ||
+                    value.name.length > 12
+                  ) {
+                    setError(true);
+                    setTimeout(() => {
+                      setError(false);
+                    }, 1500);
+                  } else if (type === 'categorys') {
+                    onPress();
+                    setModalVisible(!modalVisible);
+                    setEditMode(false);
+                    setValue({
+                      id: '',
+                      name: '',
+                      icon: '',
+                      tasks: [],
+                    });
+                    setIcon('');
+                  }
+                  if (type === 'tasks' && value.name !== '') {
+                    onPress();
+                    setModalVisible(!modalVisible);
+                    setEditMode(false);
+                    setValue({
+                      name: '',
+                      time: {
+                        hours: 0,
+                        minutes: 0,
+                      },
+                      completed: false,
+                    });
+                  }
+                }}
+                width={146}
+                fontSize={18}
+                paddingVertical={10}
+              />
+              <Button
+                text="CLOSE"
+                backgroundColor={COLORS.RED}
+                onPress={() => {
                   setModalVisible(!modalVisible);
                   setEditMode(false);
-                  setValue({
-                    id: '',
-                    name: '',
-                    icon: '',
-                    tasks: [],
-                  });
-                  setIcon('');
-                }
-                if (type === 'tasks' && value.name !== '') {
-                  onPress();
-                  setModalVisible(!modalVisible);
-                  setEditMode(false);
-                  setValue({
-                    name: '',
-                    time: {
-                      hours: 0,
-                      minutes: 0,
-                    },
-                    completed: false,
-                  });
-                }
+                  if (type === 'categorys') {
+                    setValue({
+                      id: '',
+                      name: '',
+                      icon: '',
+                      tasks: [],
+                    });
+                    setIcon('');
+                  }
+                  if (type === 'tasks') {
+                    setValue({
+                      name: '',
+                      time: {
+                        hours: 0,
+                        minutes: 0,
+                      },
+                      completed: false,
+                    });
+                  }
+                }}
+                width={146}
+                fontSize={18}
+                paddingVertical={10}
+              />
+            </View>
+            <EmojiPicker
+              onEmojiSelected={item => {
+                setIcon(item.emoji);
+                setValue({...value, icon: item.emoji});
               }}
-              width={146}
-              fontSize={18}
-              paddingVertical={10}
-            />
-            <Button
-              text="CLOSE"
-              backgroundColor={COLORS.RED}
-              onPress={() => {
-                setModalVisible(!modalVisible);
-                setEditMode(false);
-                if (type === 'categorys') {
-                  setValue({
-                    id: '',
-                    name: '',
-                    icon: '',
-                    tasks: [],
-                  });
-                  setIcon('');
-                }
-                if (type === 'tasks') {
-                  setValue({
-                    name: '',
-                    time: {
-                      hours: 0,
-                      minutes: 0,
-                    },
-                    completed: false,
-                  });
-                }
-              }}
-              width={146}
-              fontSize={18}
-              paddingVertical={10}
+              open={isOpen}
+              onClose={() => setIsOpen(false)}
             />
           </View>
-          <EmojiPicker
-            onEmojiSelected={item => {
-              setIcon(item.emoji);
-              setValue({...value, icon: item.emoji});
-            }}
-            open={isOpen}
-            onClose={() => setIsOpen(false)}
-          />
-        </View>
-      </TouchableWithoutFeedback>
+        </TouchableWithoutFeedback>
+      </View>
     </Modal>
   );
 };
