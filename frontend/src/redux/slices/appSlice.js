@@ -106,6 +106,13 @@ export const appSlice = createSlice({
       state.category[categoryPosition].tasks[taskPosition].playTime =
         !state.category[categoryPosition].tasks[taskPosition].playTime;
     },
+    resetTaskTime: (state, action) => {
+      state.category.map(category => {
+        return category.tasks.map(item => {
+          return (item.playTime = false);
+        });
+      });
+    },
     updateTimer: (state, action) => {
       const {categoryId, id, minutesLeft} = action.payload;
 
@@ -135,6 +142,7 @@ export const {
   setTaskCompleted,
   startTaskTime,
   updateTimer,
+  resetTaskTime,
 } = appSlice.actions;
 
 export default appSlice.reducer;

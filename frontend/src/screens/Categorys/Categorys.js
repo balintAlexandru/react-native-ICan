@@ -158,8 +158,10 @@ const Categorys = ({route, navigation}) => {
               Did you know a good day start with a new task,so let's create a
               category for it.
             </Text>
+            <AddButton onPress={setModalVisible} />
           </View>
         )}
+
         {category.length !== 0 && (
           <Text style={styles.categoryTitle}>Categorys</Text>
         )}
@@ -183,7 +185,7 @@ const Categorys = ({route, navigation}) => {
           </ScrollView>
         )}
 
-        <AddButton onPress={setModalVisible} />
+        {category.length !== 0 && <AddButton onPress={setModalVisible} />}
 
         <AppModal
           modalVisible={modalVisible}

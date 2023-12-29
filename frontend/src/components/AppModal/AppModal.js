@@ -205,6 +205,7 @@ const AppModal = ({
                         minutes: 0,
                       },
                       completed: false,
+                      playTime: false,
                     });
                   }
                 }}

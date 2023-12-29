@@ -23,6 +23,7 @@ import {
   updateTask,
   checkTask,
   startTaskTime,
+  resetTaskTime,
 } from '../../redux/slices/appSlice';
 import {useDispatch, useSelector} from 'react-redux';
 
@@ -43,8 +44,9 @@ const Tasks = ({route, navigation}) => {
     playTime: false,
   });
 
-  const categorys = useSelector(state => state.app.category);
   const dispatch = useDispatch();
+  const categorys = useSelector(state => state.app.category);
+
   const tasks = categorys.filter(item => item.id === id)[0].tasks;
 
   const handleCreateTask = () => {
@@ -87,11 +89,7 @@ const Tasks = ({route, navigation}) => {
             <Text style={styles.icon}>{icon}</Text>
             <Text style={styles.title}>{name}</Text>
           </View>
-          <TouchableOpacity
-            activeOpacity={1}
-            onPress={() => {
-              console.log('da');
-            }}>
+          <TouchableOpacity activeOpacity={1} onPress={() => {}}>
             <FontAwesomeIcon icon={faGear} color={COLORS.GRAY} size={25} />
           </TouchableOpacity>
         </View>
@@ -103,6 +101,7 @@ const Tasks = ({route, navigation}) => {
               <Text style={styles.infoText}>
                 Look's like you don't have any tasks yet.
               </Text>
+              <AddButton onPress={setModalVisible} />
             </View>
           )}
           {tasks.length !== 0 && (
@@ -128,7 +127,7 @@ const Tasks = ({route, navigation}) => {
           )}
         </View>
 
-        <AddButton onPress={setModalVisible} />
+        {tasks.length !== 0 && <AddButton onPress={setModalVisible} />}
 
         <AppModal
           modalVisible={modalVisible}

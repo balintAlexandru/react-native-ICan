@@ -64,9 +64,9 @@ const CategoryCard = ({
                   fontWeight: '500',
                   color: COLORS.GRAY,
                   fontStyle: 'italic',
-                  marginTop: 5,
+                  marginTop: 8,
                 }}>
-                Completed !
+                All tasks done
               </Text>
             ) : (
               <>

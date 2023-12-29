@@ -8,6 +8,7 @@ import {
   setTaskCompleted,
   startTaskTime,
   updateTimer,
+  resetTaskTime,
 } from '../redux/slices/appSlice';
 
 import {GetStarted} from '../screens';
@@ -69,6 +70,10 @@ const AppNavigation = () => {
       );
     }
   }, [minutesLeft]);
+
+  useEffect(() => {
+    dispatch(resetTaskTime());
+  }, []);
 
   return username === '' ? (
     <GetStarted />

@@ -85,8 +85,7 @@ const TaskCard = ({
           )}
           {!completed && (
             <Text style={styles.timeText}>
-              Time:
-              <Text style={styles.time}>{renderHourFormat(time)}</Text>
+              Time: <Text style={styles.time}>{renderHourFormat(time)}</Text>
             </Text>
           )}
           {completed && <Text style={styles.time}>Task done</Text>}
