@@ -17,25 +17,27 @@ export const appSlice = createSlice({
     setTaskCompleted: (state, action) => {
       state.taskCompleted = action.payload;
     },
-    createCategory: (state, action) => {
+    createReduxCategory: (state, action) => {
       state.category = [...state.category, {...action.payload}];
     },
-
-    updateCategory: (state, action) => {
+    setCategory: (state, action) => {
+      state.category = [...action.payload];
+    },
+    updateReduxCategory: (state, action) => {
       const {categoryId, name, icon} = action.payload;
       const categoryPosition = state.category.findIndex(
-        category => category.id === categoryId,
+        category => category._id === categoryId,
       );
 
       state.category[categoryPosition].name = name;
       state.category[categoryPosition].icon = icon;
     },
 
-    deleteCategory: (state, action) => {
+    deleteReduxCategory: (state, action) => {
       const {categoryId} = action.payload;
 
       state.category = state.category.filter(
-        category => category.id !== categoryId,
+        category => category._id !== categoryId,
       );
     },
 
@@ -131,18 +133,19 @@ export const appSlice = createSlice({
 });
 
 export const {
-  createCategory,
+  createReduxCategory,
   setUsername,
   createTask,
   deleteTask,
   updateTask,
-  updateCategory,
-  deleteCategory,
+  updateReduxCategory,
+  deleteReduxCategory,
   checkTask,
   setTaskCompleted,
   startTaskTime,
   updateTimer,
   resetTaskTime,
+  setCategory,
 } = appSlice.actions;
 
 export default appSlice.reducer;

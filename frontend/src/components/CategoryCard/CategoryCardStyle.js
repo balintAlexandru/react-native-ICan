@@ -3,6 +3,9 @@ import {COLORS} from '../../constants/colors';
 import {RFValue} from 'react-native-responsive-fontsize';
 
 export const styles = StyleSheet.create({
+  menuIcon: {
+    zIndex: 0,
+  },
   container: {
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -28,6 +31,7 @@ export const styles = StyleSheet.create({
     height: RFValue(35),
     justifyContent: 'center',
     alignItems: 'center',
+    zIndex: 1,
   },
   cardInfo: {
     flex: 1,

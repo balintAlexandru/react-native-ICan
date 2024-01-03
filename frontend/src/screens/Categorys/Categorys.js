@@ -9,10 +9,12 @@ import {
   LogBox,
 } from 'react-native';
 
-import uuid from 'react-native-uuid';
-
 import {useDispatch, useSelector} from 'react-redux';
-import {createCategory, updateCategory} from '../../redux/slices/appSlice';
+import {
+  createReduxCategory,
+  updateReduxCategory,
+  setCategory,
+} from '../../redux/slices/appSlice';
 
 import {styles} from './CategorysStyle';
 import {COLORS} from '../../constants/colors';
@@ -24,6 +26,7 @@ import {AppModal, CategoryCard, AddButton} from '../../components';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
 
 import getCurrentDate from '../../hooks/date';
+import {getCategory, createCategory, updateCategory} from '../../hooks/api';
 
 LogBox.ignoreAllLogs();
 
@@ -33,10 +36,9 @@ const Categorys = ({route, navigation}) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [categoryModel, setCategoryModel] = useState({
-    id: '',
+    _id: '',
     name: '',
     icon: '',
-    tasks: [],
   });
 
   const dispatch = useDispatch();
@@ -45,30 +47,60 @@ const Categorys = ({route, navigation}) => {
   const taskCompleted = useSelector(state => state.app.taskCompleted);
 
   const handleCreateCategory = () => {
-    categoryModel.id = uuid.v4();
-    dispatch(createCategory(categoryModel));
+    createCategory({name: categoryModel.name, icon: categoryModel.icon})
+      .then(response => {
+        dispatch(
+          createReduxCategory({
+            name: categoryModel.name,
+            icon: categoryModel.icon,
+            _id: response.data._id,
+          }),
+        );
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
   };
 
   const handleEditCategory = () => {
-    dispatch(
-      updateCategory({
-        categoryId: categoryModel.id,
-        name: categoryModel.name,
-        icon: categoryModel.icon,
-      }),
-    );
+    updateCategory(categoryModel._id, {
+      name: categoryModel.name,
+      icon: categoryModel.icon,
+    })
+      .then(() => {
+        dispatch(
+          updateReduxCategory({
+            categoryId: categoryModel._id,
+            name: categoryModel.name,
+            icon: categoryModel.icon,
+          }),
+        );
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
   };
 
-  const handleTotalTasks = () => {
-    if (
-      category.length === 0 ||
-      category.reduce((acc, val) => acc + val.tasks.length, 0) === 0
-    )
-      return '0 tasks';
-    return (
-      '/' + category.reduce((acc, val) => acc + val.tasks.length, 0) + ' tasks'
-    );
-  };
+  // const handleTotalTasks = () => {
+  //   if (
+  //     category?.length === 0 ||
+  //     category?.reduce((acc, val) => acc + val.tasks.length, 0) === 0
+  //   )
+  //     return '0 tasks';
+  //   return (
+  //     '/' + category.reduce((acc, val) => acc + val.tasks.length, 0) + ' tasks'
+  //   );
+  // };
+
+  useEffect(() => {
+    getCategory()
+      .then(response => {
+        dispatch(setCategory(response.data));
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  }, []);
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -101,10 +133,10 @@ const Categorys = ({route, navigation}) => {
               Today
             </Text>
             <Text style={{...styles.textContent, fontSize: 20}}>
-              {category.length !== 0 &&
+              {/* {category.length !== 0 &&
                 handleTotalTasks().includes('/') &&
                 taskCompleted}
-              {handleTotalTasks()}
+              {handleTotalTasks()} */}
             </Text>
           </View>
 
@@ -133,7 +165,7 @@ const Categorys = ({route, navigation}) => {
                 fontSize: 24,
                 position: 'absolute',
               }}>
-              {taskCompleted *
+              {/* {taskCompleted *
                 Math.ceil(
                   100 /
                     category.reduce((acc, val) => acc + val.tasks.length, 0),
@@ -146,7 +178,7 @@ const Categorys = ({route, navigation}) => {
                     100 /
                       category.reduce((acc, val) => acc + val.tasks.length, 0),
                   )
-                : 0}
+                : 0} */}
               %
             </Text>
           </View>

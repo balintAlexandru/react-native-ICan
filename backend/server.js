@@ -2,11 +2,13 @@ require("dotenv").config();
 
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors");
 const categoryRoutes = require("./routes/category");
 const tasksRoutes = require("./routes/tasks");
 
 //express app
 const app = express();
+app.use(cors());
 
 //middleware
 //Acest middleware este o functie care se apeleaza de fiecare data cand se face un request.

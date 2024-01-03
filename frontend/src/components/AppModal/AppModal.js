@@ -187,10 +187,9 @@ const AppModal = ({
                     setModalVisible(!modalVisible);
                     setEditMode(false);
                     setValue({
-                      id: '',
+                      _id: '',
                       name: '',
                       icon: '',
-                      tasks: [],
                     });
                     setIcon('');
                   }

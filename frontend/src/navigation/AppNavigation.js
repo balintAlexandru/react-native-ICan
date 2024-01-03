@@ -26,6 +26,7 @@ const AppNavigation = () => {
     id: '',
   });
   const username = useSelector(state => state.app.username);
+  const category = useSelector(state => state.app.category);
   const taskCompleted = useSelector(state => state.app.taskCompleted);
   const dispatch = useDispatch();
 
@@ -72,7 +73,7 @@ const AppNavigation = () => {
   }, [minutesLeft]);
 
   useEffect(() => {
-    dispatch(resetTaskTime());
+    // dispatch(resetTaskTime());
   }, []);
 
   return username === '' ? (
