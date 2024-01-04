@@ -11,14 +11,27 @@ const getTasks = async (req, res) => {
     });
 };
 
+//GET all tasks
+const getAllTasks = async (req, res) => {
+  await Task.find({}).then((response) => {
+    res.status(200).json(response);
+  });
+};
+
 // create new task
 const createTask = async (req, res) => {
   const { id } = req.params;
-  const { name, time } = req.body;
+  const { name, time, completed, playTime } = req.body;
 
   //add doc to db
   try {
-    const task = await Task.create({ categoryId: id, name, time });
+    const task = await Task.create({
+      categoryId: id,
+      name,
+      time,
+      completed,
+      playTime,
+    });
     res.status(200).json(task);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -42,12 +55,15 @@ const deleteTask = async (req, res) => {
 // update a task
 const updateTask = async (req, res) => {
   const { id } = req.params;
-  const { name, time } = req.body;
+  const { name, time, completed, playTime } = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(404).json({ error: "No such task" });
 
-  const task = await Task.findByIdAndUpdate({ _id: id }, { name, time });
+  const task = await Task.findByIdAndUpdate(
+    { _id: id },
+    { name, time, completed, playTime }
+  );
 
   if (!task) return res.status(404).json({ error: "No such task" });
 
@@ -61,4 +77,5 @@ module.exports = {
   createTask,
   updateTask,
   deleteTask,
+  getAllTasks,
 };

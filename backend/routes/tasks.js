@@ -4,12 +4,16 @@ const {
   createTask,
   deleteTask,
   updateTask,
+  getAllTasks,
 } = require("../controllers/taskController");
 
 const router = express.Router();
 
-// GET all tasks
+// GET category all tasks
 router.get("/:id", getTasks);
+
+//GET All tasks
+router.get("/all", getAllTasks);
 
 // POST a new task
 router.post("/:id", createTask);

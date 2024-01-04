@@ -13,8 +13,22 @@ const taskSchema = new Schema(
       required: true,
     },
     time: {
-      type: String,
-      required: true,
+      hours: {
+        type: Number,
+        default: 0,
+      },
+      minutes: {
+        type: Number,
+        default: 0,
+      },
+    },
+    completed: {
+      type: Boolean,
+      default: false,
+    },
+    playTime: {
+      type: Boolean,
+      default: false,
     },
   }
   // { timestamps: true }

@@ -198,6 +198,7 @@ const AppModal = ({
                     setModalVisible(!modalVisible);
                     setEditMode(false);
                     setValue({
+                      categoryId: '',
                       name: '',
                       time: {
                         hours: 0,
@@ -229,12 +230,14 @@ const AppModal = ({
                   }
                   if (type === 'tasks') {
                     setValue({
+                      categoryId: value.categoryId,
                       name: '',
                       time: {
                         hours: 0,
                         minutes: 0,
                       },
                       completed: false,
+                      playTime: false,
                     });
                   }
                 }}

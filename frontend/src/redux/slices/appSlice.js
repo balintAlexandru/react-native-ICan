@@ -4,6 +4,7 @@ const initialState = {
   taskCompleted: 0,
   username: '',
   category: [],
+  tasks: [],
   startTime: false,
 };
 
@@ -23,6 +24,9 @@ export const appSlice = createSlice({
     setCategory: (state, action) => {
       state.category = [...action.payload];
     },
+    setTasks: (state, action) => {
+      state.tasks = [...action.payload];
+    },
     updateReduxCategory: (state, action) => {
       const {categoryId, name, icon} = action.payload;
       const categoryPosition = state.category.findIndex(
@@ -41,19 +45,20 @@ export const appSlice = createSlice({
       );
     },
 
-    createTask: (state, action) => {
-      const {categoryId, name, time, completed, id, playTime} = action.payload;
+    createReduxTask: (state, action) => {
+      state.tasks = [...state.tasks, ...action.payload];
+      // const {categoryId, name, time, completed, id, playTime} = action.payload;
 
-      const position = state.category.findIndex(
-        category => category.id === categoryId,
-      );
-      state.category[position].tasks.push({
-        id,
-        name,
-        time,
-        completed,
-        playTime,
-      });
+      // const position = state.category.findIndex(
+      //   category => category.id === categoryId,
+      // );
+      // state.category[position].tasks.push({
+      //   id,
+      //   name,
+      //   time,
+      //   completed,
+      //   playTime,
+      // });
     },
 
     updateTask: (state, action) => {
@@ -135,7 +140,7 @@ export const appSlice = createSlice({
 export const {
   createReduxCategory,
   setUsername,
-  createTask,
+  createReduxTask,
   deleteTask,
   updateTask,
   updateReduxCategory,
@@ -146,6 +151,7 @@ export const {
   updateTimer,
   resetTaskTime,
   setCategory,
+  setTasks,
 } = appSlice.actions;
 
 export default appSlice.reducer;

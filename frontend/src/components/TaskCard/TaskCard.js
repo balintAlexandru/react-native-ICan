@@ -34,8 +34,9 @@ const TaskCard = ({
   stopTimer,
   startTimer,
   setMinutesLeft,
+  handleDeleteTask,
 }) => {
-  const {id, name, time, completed, playTime} = task;
+  const {_id, name, time, completed, playTime} = task;
 
   const [showSettings, setShowSettings] = useState(false);
 
@@ -60,7 +61,7 @@ const TaskCard = ({
                 completed ? taskCompleted - 1 : taskCompleted + 1,
               ),
             );
-            handleCheck(id);
+            handleCheck(_id);
             if (playTime) handleStartTime(id);
           }}
           style={{
@@ -149,10 +150,11 @@ const TaskCard = ({
           <TouchableOpacity
             activeOpacity={1}
             onPress={() => {
-              dispatch(deleteTask({categoryId: categoryId, id}));
-              if (completed) {
-                dispatch(setTaskCompleted(taskCompleted - 1));
-              }
+              handleDeleteTask(_id);
+              // dispatch(deleteTask({categoryId: categoryId, id}));
+              // if (completed) {
+              //   dispatch(setTaskCompleted(taskCompleted - 1));
+              // }
             }}>
             <FontAwesomeIcon icon={faTrash} size={20} color={COLORS.RED} />
           </TouchableOpacity>
