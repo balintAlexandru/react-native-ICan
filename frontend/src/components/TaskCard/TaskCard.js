@@ -56,13 +56,14 @@ const TaskCard = ({
         <TouchableOpacity
           activeOpacity={1}
           onPress={() => {
-            dispatch(
-              setTaskCompleted(
-                completed ? taskCompleted - 1 : taskCompleted + 1,
-              ),
-            );
-            handleCheck(_id);
-            if (playTime) handleStartTime(id);
+            handleCheck(_id, completed);
+            // dispatch(
+            //   setTaskCompleted(
+            //     completed ? taskCompleted - 1 : taskCompleted + 1,
+            //   ),
+            // );
+
+            // if (playTime) handleStartTime(id);
           }}
           style={{
             ...styles.radioWrapper,
@@ -111,7 +112,7 @@ const TaskCard = ({
             activeOpacity={1}
             onPress={() => {
               setModalVisible(true);
-              setTaskModel(task);
+              setTaskModel({_id, name, time, completed, playTime});
               setEditMode(true);
             }}>
             <FontAwesomeIcon icon={faPen} size={20} color={COLORS.AQUA_BLUE} />
@@ -151,10 +152,6 @@ const TaskCard = ({
             activeOpacity={1}
             onPress={() => {
               handleDeleteTask(_id);
-              // dispatch(deleteTask({categoryId: categoryId, id}));
-              // if (completed) {
-              //   dispatch(setTaskCompleted(taskCompleted - 1));
-              // }
             }}>
             <FontAwesomeIcon icon={faTrash} size={20} color={COLORS.RED} />
           </TouchableOpacity>

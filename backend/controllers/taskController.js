@@ -55,6 +55,7 @@ const deleteTask = async (req, res) => {
 // update a task
 const updateTask = async (req, res) => {
   const { id } = req.params;
+
   const { name, time, completed, playTime } = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(id))
@@ -72,10 +73,28 @@ const updateTask = async (req, res) => {
   res.status(200).json(updatedTask);
 };
 
+const checkTask = async (req, res) => {
+  const { id } = req.params;
+
+  const { completed } = req.body;
+
+  if (!mongoose.Types.ObjectId.isValid(id))
+    return res.status(404).json({ error: "No such task" });
+
+  const task = await Task.findByIdAndUpdate({ _id: id }, { completed });
+
+  if (!task) return res.status(404).json({ error: "No such task" });
+
+  const updatedTask = await Task.findById(id);
+
+  res.status(200).json(updatedTask);
+};
+
 module.exports = {
   getTasks,
   createTask,
   updateTask,
   deleteTask,
   getAllTasks,
+  checkTask,
 };

@@ -26,7 +26,12 @@ import {AppModal, CategoryCard, AddButton} from '../../components';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
 
 import getCurrentDate from '../../hooks/date';
-import {getCategory, createCategory, updateCategory} from '../../hooks/api';
+import {
+  getCategory,
+  createCategory,
+  updateCategory,
+  getAllTasks,
+} from '../../hooks/api';
 
 LogBox.ignoreAllLogs();
 
@@ -35,6 +40,7 @@ const Categorys = ({route, navigation}) => {
   const date = getCurrentDate();
   const [modalVisible, setModalVisible] = useState(false);
   const [editMode, setEditMode] = useState(false);
+  const [allTasks, setAllTasks] = useState([]);
   const [categoryModel, setCategoryModel] = useState({
     _id: '',
     name: '',
@@ -91,15 +97,29 @@ const Categorys = ({route, navigation}) => {
   //     '/' + category.reduce((acc, val) => acc + val.tasks.length, 0) + ' tasks'
   //   );
   // };
-
-  useEffect(() => {
-    getCategory()
+  const handleGetCategorys = async () => {
+    await getCategory()
       .then(response => {
         dispatch(setCategory(response.data));
       })
       .catch(error => {
         console.error('Error:', error);
       });
+  };
+
+  const handleGetTasks = async () => {
+    await getAllTasks()
+      .then(response => {
+        console.log(response);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  };
+
+  useEffect(() => {
+    handleGetCategorys();
+    handleGetTasks();
   }, []);
 
   return (

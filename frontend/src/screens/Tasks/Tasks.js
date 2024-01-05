@@ -16,11 +16,17 @@ import {faBook} from '@fortawesome/free-solid-svg-icons/faBook';
 
 import {AddButton, AppModal, TaskCard} from '../../components';
 
-import {createTask, getTasks, deleteTask} from '../../hooks/api';
 import {
-  createReduxTask,
+  createTask,
+  getTasks,
+  deleteTask,
   updateTask,
   checkTask,
+} from '../../hooks/api';
+import {
+  createReduxTask,
+  // updateTask,
+  // checkTask,
   startTaskTime,
   resetTaskTime,
 } from '../../redux/slices/appSlice';
@@ -55,25 +61,32 @@ const Tasks = ({route, navigation}) => {
     );
   };
 
-  const handleEditTask = () => {
-    // dispatch(
-    //   updateTask({
-    //     categoryId: id,
-    //     id: taskModel.id,
-    //     name: taskModel.name,
-    //     time: taskModel.time,
-    //     playTime: taskModel.playTime,
-    //   }),
-    // );
+  const handleEditTask = async () => {
+    await updateTask(taskModel._id, taskModel)
+      .then(response => {
+        setTasks(
+          tasks.map(item =>
+            item._id === response.data._id ? response.data : item,
+          ),
+        );
+      })
+      .catch(err => {
+        console.log('Error: ', err);
+      });
   };
 
-  const handleCheck = taskId => {
-    setTasks(
-      tasks.map(item =>
-        item._id === taskId ? {...item, completed: !item.completed} : item,
-      ),
-    );
-    // HERE NEED THE BACKEND REQUEST
+  const handleCheck = async (taskId, completed) => {
+    await checkTask(taskId, {completed: !completed})
+      .then(() => {
+        setTasks(
+          tasks.map(item =>
+            item._id === taskId ? {...item, completed: !item.completed} : item,
+          ),
+        );
+      })
+      .catch(err => {
+        console.log('Error: ', err);
+      });
   };
 
   const handleDeleteTask = async taskId => {
@@ -86,11 +99,13 @@ const Tasks = ({route, navigation}) => {
   //   dispatch(startTaskTime({categoryId: id, id: taskId}));
   // };
 
-  useEffect(async () => {
-    await getTasks(_id).then(response => setTasks(response.data));
+  useEffect(() => {
+    const fetchData = async () => {
+      await getTasks(_id).then(response => setTasks(response.data));
+    };
+    fetchData();
   }, []);
 
-  console.log(tasks);
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>

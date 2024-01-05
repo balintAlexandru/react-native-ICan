@@ -34,10 +34,14 @@ export const getTasks = categoryId => {
 };
 
 export const getAllTasks = () => {
-  return api.get('/tasks/all');
+  return api.get('/tasks/');
 };
 
 export const updateTask = (taskId, taskData) => {
+  return api.patch(`/tasks/${taskId}`, taskData);
+};
+
+export const checkTask = (taskId, taskData) => {
   return api.patch(`/tasks/${taskId}`, taskData);
 };
 

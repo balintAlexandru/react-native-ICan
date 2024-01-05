@@ -121,7 +121,7 @@ const AppModal = ({
               </View>
             )}
 
-            {type === 'tasks' && (
+            {type === 'tasks' && value.time && (
               <View style={styles.timeWrapper}>
                 <Text style={styles.label}>
                   Time <Text style={{color: COLORS.GRAY}}>(Optional)</Text>
@@ -140,7 +140,7 @@ const AppModal = ({
                     keyboardType={'numeric'}
                     placeholder="Hours"
                     placeholderTextColor={COLORS.GRAY}
-                    value={value.time.hours || ''}
+                    value={value.time.hours.toString()}
                     onChangeText={text =>
                       setValue({...value, time: {...value.time, hours: text}})
                     }
@@ -159,7 +159,7 @@ const AppModal = ({
                     keyboardType={'numeric'}
                     placeholder="Minutes"
                     placeholderTextColor={COLORS.GRAY}
-                    value={value.time.minutes || ''}
+                    value={value.time.minutes.toString()}
                     onChangeText={text =>
                       setValue({...value, time: {...value.time, minutes: text}})
                     }
@@ -221,10 +221,9 @@ const AppModal = ({
                   setEditMode(false);
                   if (type === 'categorys') {
                     setValue({
-                      id: '',
+                      _id: '',
                       name: '',
                       icon: '',
-                      tasks: [],
                     });
                     setIcon('');
                   }
