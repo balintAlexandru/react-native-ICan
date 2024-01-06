@@ -110,7 +110,7 @@ const Categorys = ({route, navigation}) => {
   const handleGetTasks = async () => {
     await getAllTasks()
       .then(response => {
-        console.log(response);
+        setAllTasks(response.data);
       })
       .catch(error => {
         console.error('Error:', error);
@@ -121,7 +121,7 @@ const Categorys = ({route, navigation}) => {
     handleGetCategorys();
     handleGetTasks();
   }, []);
-
+  console.log(allTasks);
   return (
     <SafeAreaView style={styles.safeArea}>
       <StatusBar barStyle={'dark-content'} />

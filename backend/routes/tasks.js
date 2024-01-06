@@ -11,10 +11,10 @@ const {
 const router = express.Router();
 
 // GET category all tasks
-router.get("/:id", getTasks);
+router.get("/category/:id", getTasks);
 
 //GET All tasks
-router.get("/", getAllTasks);
+router.get("/all", getAllTasks);
 
 // POST a new task
 router.post("/:id", createTask);

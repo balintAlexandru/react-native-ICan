@@ -30,11 +30,11 @@ export const createTask = (categoryId, taskData) => {
 };
 
 export const getTasks = categoryId => {
-  return api.get(`/tasks/${categoryId}`);
+  return api.get(`/tasks/category/${categoryId}`);
 };
 
 export const getAllTasks = () => {
-  return api.get('/tasks/');
+  return api.get('/tasks/all');
 };
 
 export const updateTask = (taskId, taskData) => {
