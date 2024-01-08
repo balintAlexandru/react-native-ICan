@@ -4,7 +4,7 @@ const initialState = {
   taskCompleted: 0,
   username: '',
   category: [],
-  tasks: [],
+  allTasks: [],
   startTime: false,
 };
 
@@ -24,8 +24,19 @@ export const appSlice = createSlice({
     setCategory: (state, action) => {
       state.category = [...action.payload];
     },
-    setTasks: (state, action) => {
-      state.tasks = [...action.payload];
+    setAllTasks: (state, action) => {
+      state.allTasks = [...action.payload];
+    },
+    addToAllTasks: (state, action) => {
+      state.allTasks.push(action.payload);
+    },
+    setChronometer: (state, action) => {
+      state.startTime = !state.startTime;
+    },
+    deleteReduxAllTasks: (state, action) => {
+      state.allTasks = state.allTasks.includes(
+        item => item.categoryId !== action.payload,
+      );
     },
     updateReduxCategory: (state, action) => {
       const {categoryId, name, icon} = action.payload;
@@ -75,31 +86,20 @@ export const appSlice = createSlice({
       state.category[categoryPosition].tasks[taskPosition].time = time;
     },
 
-    deleteTask: (state, action) => {
-      const {categoryId, id} = action.payload;
-
-      const position = state.category.findIndex(
-        category => category.id === categoryId,
-      );
-
-      state.category[position].tasks = state.category[position].tasks.filter(
-        task => task.id !== id,
+    deleteReduxTask: (state, action) => {
+      state.allTasks = state.allTasks.filter(
+        item => item._id !== action.payload,
       );
     },
 
     checkTask: (state, action) => {
-      const {categoryId, id} = action.payload;
+      const {_id} = action.payload;
 
-      const categoryPosition = state.category.findIndex(
-        category => category.id === categoryId,
-      );
-      const taskPosition = state.category[categoryPosition].tasks.findIndex(
-        task => task.id === id,
-      );
-
-      state.category[categoryPosition].tasks[taskPosition].completed =
-        !state.category[categoryPosition].tasks[taskPosition].completed;
+      state.allTasks = state.allTasks.map(item => {
+        return item._id === _id ? {...item, completed: !item.completed} : item;
+      });
     },
+
     startTaskTime: (state, action) => {
       const {categoryId, id} = action.payload;
 
@@ -141,7 +141,7 @@ export const {
   createReduxCategory,
   setUsername,
   createReduxTask,
-  deleteTask,
+  deleteReduxTask,
   updateTask,
   updateReduxCategory,
   deleteReduxCategory,
@@ -151,7 +151,10 @@ export const {
   updateTimer,
   resetTaskTime,
   setCategory,
-  setTasks,
+  setAllTasks,
+  addToAllTasks,
+  deleteReduxAllTasks,
+  setChronometer,
 } = appSlice.actions;
 
 export default appSlice.reducer;

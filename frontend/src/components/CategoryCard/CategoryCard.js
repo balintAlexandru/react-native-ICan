@@ -9,12 +9,14 @@ import {faXmark} from '@fortawesome/free-solid-svg-icons/faXmark';
 
 import {Button} from '..';
 
-import {deleteCategory} from '../../hooks/api';
+import {deleteCategory, deleteAllTasks} from '../../hooks/api';
 
 import {useDispatch, useSelector} from 'react-redux';
 import {
   deleteReduxCategory,
   setTaskCompleted,
+  deleteReduxAllTasks,
+  setAllTasks,
 } from '../../redux/slices/appSlice';
 
 import PropTypes from 'prop-types';
@@ -34,6 +36,32 @@ const CategoryCard = ({
   const [showSettings, setShowSettings] = useState(false);
   const dispatch = useDispatch();
   const taskCompleted = useSelector(state => state.app.taskCompleted);
+  const allTasks = useSelector(state => state.app.allTasks);
+
+  const handleDeleteAllTasks = async categoryId => {
+    dispatch(
+      setTaskCompleted(
+        taskCompleted -
+          allTasks
+            .filter(item => item.categoryId === categoryId)
+            .reduce((a, b) => (b.completed ? a + 1 : a + 0), 0),
+      ),
+    );
+    dispatch(
+      setAllTasks(allTasks.filter(item => item.categoryId !== categoryId)),
+    );
+    await deleteAllTasks(categoryId);
+  };
+
+  const handleDeleteCategory = async categoryId => {
+    await deleteCategory(categoryId)
+      .then(() => {
+        dispatch(deleteReduxCategory({categoryId}));
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  };
 
   return (
     <TouchableOpacity
@@ -65,8 +93,11 @@ const CategoryCard = ({
           <Text style={styles.icon}>{icon}</Text>
           <View style={styles.infoWrapper}>
             <Text style={styles.name}>{name}</Text>
-            {/* {category.tasks.filter(item => item.completed).length ===
-              category.tasks.length && category.tasks.length !== 0 ? (
+            {allTasks
+              .filter(item => item.categoryId === _id)
+              .reduce((a, b) => (b.completed ? a + 1 : a + 0), 0) ===
+              allTasks.filter(item => item.categoryId === _id).length &&
+            allTasks.filter(item => item.categoryId === _id).length !== 0 ? (
               <Text
                 style={{
                   fontSize: RFValue(16),
@@ -81,16 +112,23 @@ const CategoryCard = ({
             ) : (
               <>
                 <Text style={styles.tasks}>
-                  Tasks: {category.tasks.filter(item => !item.completed).length}
+                  Tasks:{' '}
+                  {allTasks
+                    .filter(item => item.categoryId === _id)
+                    .reduce((a, b) => (b.completed ? a + 0 : a + 1), 0)}
                 </Text>
-                {category.tasks.filter(item => item.completed).length !== 0 && (
+                {allTasks
+                  .filter(item => item.categoryId === _id)
+                  .reduce((a, b) => (b.completed ? a + 1 : a + 0), 0) !== 0 && (
                   <Text style={styles.tasksCompleted}>
                     Completed:{' '}
-                    {category.tasks.filter(item => item.completed).length}
+                    {allTasks
+                      .filter(item => item.categoryId === _id)
+                      .reduce((a, b) => (b.completed ? a + 1 : a + 0), 0)}
                   </Text>
                 )}
               </>
-            )} */}
+            )}
           </View>
         </View>
       )}
@@ -114,13 +152,8 @@ const CategoryCard = ({
             backgroundColor={COLORS.RED}
             onPress={() => {
               setShowSettings(false);
-              deleteCategory(_id)
-                .then(() => {
-                  dispatch(deleteReduxCategory({categoryId: _id}));
-                })
-                .catch(error => {
-                  console.error('Error:', error);
-                });
+              handleDeleteAllTasks(_id);
+              handleDeleteCategory(_id);
             }}
             width={120}
             fontSize={16}

@@ -49,4 +49,8 @@ export const deleteTask = taskId => {
   return api.delete(`/tasks/${taskId}`);
 };
 
+export const deleteAllTasks = categoryId => {
+  return api.delete(`/tasks/all/${categoryId}`);
+};
+
 export default api;

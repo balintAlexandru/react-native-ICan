@@ -32,12 +32,47 @@ const AppNavigation = () => {
 
   const [minutesLeft, setMinutesLeft] = useState(-1);
 
-  const startTimer = (categoryId, id) => {
-    setTaskData({
-      categoryId,
-      id,
-    });
+  // const startTimer = (categoryId, id) => {
+  //   setTaskData({
+  //     categoryId,
+  //     id,
+  //   });
 
+  //   BackgroundTimer.runBackgroundTimer(() => {
+  //     setMinutesLeft(min => {
+  //       if (min > 0) {
+  //         return min - 1;
+  //       } else {
+  //         return 0;
+  //       }
+  //     });
+  //   }, 2000);
+  // };
+
+  const stopTimer = () => {
+    BackgroundTimer.stopBackgroundTimer();
+  };
+
+  // useEffect(() => {
+  //   if (minutesLeft === 0) {
+  //     dispatch(setTaskCompleted(taskCompleted + 1));
+  //     dispatch(checkTask({...taskData}));
+  //     dispatch(
+  //       startTaskTime({categoryId: taskData.categoryId, id: taskData.id}),
+  //     );
+  //     stopTimer(taskData.categoryId, taskData.id);
+  //   }
+  //   if (taskData.id !== '' && taskData.categoryId !== '') {
+  //     dispatch(
+  //       updateTimer({
+  //         ...taskData,
+  //         minutesLeft: convertMinutesToHoursAndMinutes(minutesLeft),
+  //       }),
+  //     );
+  //   }
+  // }, [minutesLeft]);
+
+  const startTimer = () => {
     BackgroundTimer.runBackgroundTimer(() => {
       setMinutesLeft(min => {
         if (min > 0) {
@@ -49,32 +84,10 @@ const AppNavigation = () => {
     }, 2000);
   };
 
-  const stopTimer = () => {
-    BackgroundTimer.stopBackgroundTimer();
-  };
-
-  useEffect(() => {
-    if (minutesLeft === 0) {
-      dispatch(setTaskCompleted(taskCompleted + 1));
-      dispatch(checkTask({...taskData}));
-      dispatch(
-        startTaskTime({categoryId: taskData.categoryId, id: taskData.id}),
-      );
-      stopTimer(taskData.categoryId, taskData.id);
-    }
-    if (taskData.id !== '' && taskData.categoryId !== '') {
-      dispatch(
-        updateTimer({
-          ...taskData,
-          minutesLeft: convertMinutesToHoursAndMinutes(minutesLeft),
-        }),
-      );
-    }
-  }, [minutesLeft]);
-
   useEffect(() => {
     // dispatch(resetTaskTime());
-  }, []);
+    console.log(minutesLeft);
+  }, [minutesLeft]);
 
   return username === '' ? (
     <GetStarted />

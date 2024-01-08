@@ -52,6 +52,20 @@ const deleteTask = async (req, res) => {
   res.status(200).json(task);
 };
 
+// delete all tasks
+const deleteAllTasks = async (req, res) => {
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id))
+    return res.status(404).json({ error: "No such task" });
+
+  const task = await Task.deleteMany({ categoryId: id });
+
+  if (!task) return res.status(404).json({ error: "No such task" });
+
+  res.status(200).json(task);
+};
+
 // update a task
 const updateTask = async (req, res) => {
   const { id } = req.params;
@@ -97,4 +111,5 @@ module.exports = {
   deleteTask,
   getAllTasks,
   checkTask,
+  deleteAllTasks,
 };

@@ -29,6 +29,8 @@ import {
   // checkTask,
   startTaskTime,
   resetTaskTime,
+  addToAllTasks,
+  deleteReduxTask,
 } from '../../redux/slices/appSlice';
 import {useDispatch, useSelector} from 'react-redux';
 
@@ -56,9 +58,12 @@ const Tasks = ({route, navigation}) => {
   // const tasks = categorys.filter(item => item.id === id)[0].tasks;
 
   const handleCreateTask = async () => {
-    await createTask(_id, taskModel).then(response =>
-      setTasks([...tasks, response.data]),
-    );
+    await createTask(_id, taskModel).then(response => {
+      setTasks([...tasks, response.data]);
+      setTimeout(() => {
+        dispatch(addToAllTasks(response.data));
+      }, 10);
+    });
   };
 
   const handleEditTask = async () => {
@@ -92,6 +97,7 @@ const Tasks = ({route, navigation}) => {
   const handleDeleteTask = async taskId => {
     await deleteTask(taskId).then(() => {
       setTasks(tasks.filter(item => item._id !== taskId));
+      dispatch(deleteReduxTask(taskId));
     });
   };
 
@@ -150,9 +156,9 @@ const Tasks = ({route, navigation}) => {
                   handleCheck={handleCheck}
                   handleDeleteTask={handleDeleteTask}
                   // handleStartTime={handleStartTime}
-                  // startTimer={startTimer}
-                  // stopTimer={stopTimer}
-                  // setMinutesLeft={setMinutesLeft}
+                  startTimer={startTimer}
+                  stopTimer={stopTimer}
+                  setMinutesLeft={setMinutesLeft}
                 />
               )}
               keyExtractor={() => Math.random()}

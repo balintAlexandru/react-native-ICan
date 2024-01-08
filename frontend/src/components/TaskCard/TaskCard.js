@@ -16,9 +16,10 @@ import {convertTimeStringToMinutes} from '../../hooks/task';
 
 import {useDispatch, useSelector} from 'react-redux';
 import {
-  deleteTask,
   setTaskCompleted,
   startTaskTime,
+  checkTask,
+  setChronometer,
 } from '../../redux/slices/appSlice';
 
 import PropTypes from 'prop-types';
@@ -42,7 +43,8 @@ const TaskCard = ({
 
   const dispatch = useDispatch();
   const taskCompleted = useSelector(state => state.app.taskCompleted);
-
+  const startTime = useSelector(state => state.app.startTime);
+  console.log(startTime);
   const renderHourFormat = time => {
     if (time.hours === 0 && time.minutes === 0) return ' Unlimited';
     if (time.minutes === 0) return `${time.hours} hours`;
@@ -57,11 +59,12 @@ const TaskCard = ({
           activeOpacity={1}
           onPress={() => {
             handleCheck(_id, completed);
-            // dispatch(
-            //   setTaskCompleted(
-            //     completed ? taskCompleted - 1 : taskCompleted + 1,
-            //   ),
-            // );
+            dispatch(checkTask({_id, completed}));
+            dispatch(
+              setTaskCompleted(
+                completed ? taskCompleted - 1 : taskCompleted + 1,
+              ),
+            );
 
             // if (playTime) handleStartTime(id);
           }}
@@ -121,25 +124,27 @@ const TaskCard = ({
             <TouchableOpacity
               activeOpacity={1}
               onPress={() => {
-                if (!playTime) {
-                  dispatch(startTaskTime({categoryId, id}));
+                if (!startTime) {
+                  dispatch(setChronometer());
+                  //   dispatch(startTaskTime({categoryId, id}));
                   setMinutesLeft(
                     convertTimeStringToMinutes(renderHourFormat(time)),
                   );
-                  startTimer(categoryId, id);
+                  startTimer();
                 } else {
-                  dispatch(startTaskTime({categoryId, id}));
-                  stopTimer(categoryId, id);
+                  dispatch(setChronometer());
+                  //   dispatch(startTaskTime({categoryId, id}));
+                  stopTimer();
                 }
               }}>
-              {!playTime && (
+              {!startTime && (
                 <FontAwesomeIcon
                   icon={faClock}
                   size={20}
                   color={COLORS.PURPLE}
                 />
               )}
-              {playTime && (
+              {startTime && (
                 <FontAwesomeIcon
                   icon={faCirclePause}
                   size={20}

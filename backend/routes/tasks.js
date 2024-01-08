@@ -6,6 +6,7 @@ const {
   updateTask,
   getAllTasks,
   checkTask,
+  deleteAllTasks,
 } = require("../controllers/taskController");
 
 const router = express.Router();
@@ -22,8 +23,8 @@ router.post("/:id", createTask);
 // DELETE a task
 router.delete("/:id", deleteTask);
 
-// DELETE all tasks, replace deleteTask with deleteAllTask a new function in controller.
-router.delete("/delete-all", deleteTask);
+// DELETE all tasks
+router.delete("/all/:id", deleteAllTasks);
 
 // UPDATE a task
 router.patch("/:id", updateTask);

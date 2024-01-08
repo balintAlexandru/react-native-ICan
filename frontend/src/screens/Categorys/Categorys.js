@@ -14,6 +14,8 @@ import {
   createReduxCategory,
   updateReduxCategory,
   setCategory,
+  setTaskCompleted,
+  setAllTasks,
 } from '../../redux/slices/appSlice';
 
 import {styles} from './CategorysStyle';
@@ -40,7 +42,6 @@ const Categorys = ({route, navigation}) => {
   const date = getCurrentDate();
   const [modalVisible, setModalVisible] = useState(false);
   const [editMode, setEditMode] = useState(false);
-  const [allTasks, setAllTasks] = useState([]);
   const [categoryModel, setCategoryModel] = useState({
     _id: '',
     name: '',
@@ -51,6 +52,7 @@ const Categorys = ({route, navigation}) => {
   const username = useSelector(state => state.app.username);
   const category = useSelector(state => state.app.category);
   const taskCompleted = useSelector(state => state.app.taskCompleted);
+  const allTasks = useSelector(state => state.app.allTasks);
 
   const handleCreateCategory = () => {
     createCategory({name: categoryModel.name, icon: categoryModel.icon})
@@ -87,16 +89,11 @@ const Categorys = ({route, navigation}) => {
       });
   };
 
-  // const handleTotalTasks = () => {
-  //   if (
-  //     category?.length === 0 ||
-  //     category?.reduce((acc, val) => acc + val.tasks.length, 0) === 0
-  //   )
-  //     return '0 tasks';
-  //   return (
-  //     '/' + category.reduce((acc, val) => acc + val.tasks.length, 0) + ' tasks'
-  //   );
-  // };
+  const handleTotalTasks = () => {
+    if (allTasks?.length === 0) return '0 tasks';
+    return '/' + allTasks?.length + ' tasks';
+  };
+
   const handleGetCategorys = async () => {
     await getCategory()
       .then(response => {
@@ -110,7 +107,14 @@ const Categorys = ({route, navigation}) => {
   const handleGetTasks = async () => {
     await getAllTasks()
       .then(response => {
-        setAllTasks(response.data);
+        dispatch(setAllTasks(response.data));
+        dispatch(
+          setTaskCompleted(
+            response.data.reduce((a, b) => {
+              return b.completed ? a + 1 : a + 0;
+            }, 0),
+          ),
+        );
       })
       .catch(error => {
         console.error('Error:', error);
@@ -121,7 +125,7 @@ const Categorys = ({route, navigation}) => {
     handleGetCategorys();
     handleGetTasks();
   }, []);
-  console.log(allTasks);
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <StatusBar barStyle={'dark-content'} />
@@ -153,10 +157,10 @@ const Categorys = ({route, navigation}) => {
               Today
             </Text>
             <Text style={{...styles.textContent, fontSize: 20}}>
-              {/* {category.length !== 0 &&
+              {allTasks?.length !== 0 &&
                 handleTotalTasks().includes('/') &&
                 taskCompleted}
-              {handleTotalTasks()} */}
+              {handleTotalTasks()}
             </Text>
           </View>
 
@@ -165,15 +169,8 @@ const Categorys = ({route, navigation}) => {
               size={95}
               width={3}
               fill={
-                category[0]?.tasks?.length
-                  ? taskCompleted *
-                    Math.ceil(
-                      100 /
-                        category.reduce(
-                          (acc, val) => acc + val.tasks.length,
-                          0,
-                        ),
-                    )
+                allTasks?.length
+                  ? taskCompleted * Math.ceil(100 / allTasks.length)
                   : 0
               }
               tintColor="white"
@@ -185,6 +182,11 @@ const Categorys = ({route, navigation}) => {
                 fontSize: 24,
                 position: 'absolute',
               }}>
+              {taskCompleted * Math.ceil(100 / allTasks?.length) >= 99
+                ? 100
+                : allTasks?.length
+                ? taskCompleted * Math.ceil(100 / allTasks?.length)
+                : 0}
               {/* {taskCompleted *
                 Math.ceil(
                   100 /
