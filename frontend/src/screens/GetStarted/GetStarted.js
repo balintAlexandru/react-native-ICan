@@ -12,7 +12,6 @@ import {useDispatch, useSelector} from 'react-redux';
 const GetStarted = () => {
   const dispatch = useDispatch();
   const [name, setName] = useState('');
-  const count = useSelector(state => state.app.username);
 
   return (
     <SafeAreaView style={styles.safeArea}>

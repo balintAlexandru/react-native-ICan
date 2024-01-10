@@ -17,8 +17,7 @@ import {convertTimeStringToMinutes} from '../../hooks/task';
 import {useDispatch, useSelector} from 'react-redux';
 import {
   setTaskCompleted,
-  startTaskTime,
-  checkTask,
+  checkReduxTask,
   setChronometer,
 } from '../../redux/slices/appSlice';
 
@@ -26,25 +25,25 @@ import PropTypes from 'prop-types';
 
 const TaskCard = ({
   task,
-  categoryId,
   setModalVisible,
   setTaskModel,
   setEditMode,
   handleCheck,
-  handleStartTime,
   stopTimer,
   startTimer,
   setMinutesLeft,
   handleDeleteTask,
+  setTasks,
+  tasks,
 }) => {
-  const {_id, name, time, completed, playTime} = task;
+  const {_id, name, time, completed} = task;
 
   const [showSettings, setShowSettings] = useState(false);
 
   const dispatch = useDispatch();
   const taskCompleted = useSelector(state => state.app.taskCompleted);
-  const startTime = useSelector(state => state.app.startTime);
-  console.log(startTime);
+  const taskStartTime = useSelector(state => state.app.taskStartTime);
+
   const renderHourFormat = time => {
     if (time.hours === 0 && time.minutes === 0) return ' Unlimited';
     if (time.minutes === 0) return `${time.hours} hours`;
@@ -59,14 +58,12 @@ const TaskCard = ({
           activeOpacity={1}
           onPress={() => {
             handleCheck(_id, completed);
-            dispatch(checkTask({_id, completed}));
+            dispatch(checkReduxTask({_id}));
             dispatch(
               setTaskCompleted(
                 completed ? taskCompleted - 1 : taskCompleted + 1,
               ),
             );
-
-            // if (playTime) handleStartTime(id);
           }}
           style={{
             ...styles.radioWrapper,
@@ -85,7 +82,7 @@ const TaskCard = ({
             }}>
             {name}
           </Text>
-          {playTime && !completed && (
+          {taskStartTime === _id && (
             <Text style={styles.progress}>In progress...</Text>
           )}
           {!completed && (
@@ -115,7 +112,7 @@ const TaskCard = ({
             activeOpacity={1}
             onPress={() => {
               setModalVisible(true);
-              setTaskModel({_id, name, time, completed, playTime});
+              setTaskModel({_id, name, time, completed});
               setEditMode(true);
             }}>
             <FontAwesomeIcon icon={faPen} size={20} color={COLORS.AQUA_BLUE} />
@@ -124,27 +121,25 @@ const TaskCard = ({
             <TouchableOpacity
               activeOpacity={1}
               onPress={() => {
-                if (!startTime) {
-                  dispatch(setChronometer());
-                  //   dispatch(startTaskTime({categoryId, id}));
+                if (taskStartTime === '') {
+                  dispatch(setChronometer(_id));
                   setMinutesLeft(
                     convertTimeStringToMinutes(renderHourFormat(time)),
                   );
-                  startTimer();
+                  startTimer(tasks, setTasks, _id);
                 } else {
-                  dispatch(setChronometer());
-                  //   dispatch(startTaskTime({categoryId, id}));
+                  dispatch(setChronometer(''));
                   stopTimer();
                 }
               }}>
-              {!startTime && (
+              {taskStartTime === '' && (
                 <FontAwesomeIcon
                   icon={faClock}
                   size={20}
                   color={COLORS.PURPLE}
                 />
               )}
-              {startTime && (
+              {taskStartTime !== '' && (
                 <FontAwesomeIcon
                   icon={faCirclePause}
                   size={20}
@@ -166,6 +161,26 @@ const TaskCard = ({
   );
 };
 
-TaskCard.propTypes = {};
+TaskCard.propTypes = {
+  task: PropTypes.shape({
+    _id: PropTypes.string,
+    name: PropTypes.string,
+    title: PropTypes.shape({
+      hours: PropTypes.number,
+      minutes: PropTypes.number,
+    }),
+    completed: PropTypes.bool,
+  }),
+  tasks: PropTypes.array,
+  setModalVisible: PropTypes.func,
+  setTaskModel: PropTypes.func,
+  setEditMode: PropTypes.func,
+  handleCheck: PropTypes.func,
+  stopTimer: PropTypes.func,
+  startTimer: PropTypes.func,
+  setMinutesLeft: PropTypes.func,
+  handleDeleteTask: PropTypes.func,
+  setTasks: PropTypes.func,
+};
 
 export default TaskCard;

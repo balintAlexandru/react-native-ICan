@@ -5,7 +5,7 @@ const initialState = {
   username: '',
   category: [],
   allTasks: [],
-  startTime: false,
+  taskStartTime: '',
 };
 
 export const appSlice = createSlice({
@@ -31,7 +31,7 @@ export const appSlice = createSlice({
       state.allTasks.push(action.payload);
     },
     setChronometer: (state, action) => {
-      state.startTime = !state.startTime;
+      state.taskStartTime = action.payload;
     },
     deleteReduxAllTasks: (state, action) => {
       state.allTasks = state.allTasks.includes(
@@ -56,83 +56,18 @@ export const appSlice = createSlice({
       );
     },
 
-    createReduxTask: (state, action) => {
-      state.tasks = [...state.tasks, ...action.payload];
-      // const {categoryId, name, time, completed, id, playTime} = action.payload;
-
-      // const position = state.category.findIndex(
-      //   category => category.id === categoryId,
-      // );
-      // state.category[position].tasks.push({
-      //   id,
-      //   name,
-      //   time,
-      //   completed,
-      //   playTime,
-      // });
-    },
-
-    updateTask: (state, action) => {
-      const {categoryId, id, name, time} = action.payload;
-
-      const categoryPosition = state.category.findIndex(
-        category => category.id === categoryId,
-      );
-      const taskPosition = state.category[categoryPosition].tasks.findIndex(
-        task => task.id === id,
-      );
-
-      state.category[categoryPosition].tasks[taskPosition].name = name;
-      state.category[categoryPosition].tasks[taskPosition].time = time;
-    },
-
     deleteReduxTask: (state, action) => {
       state.allTasks = state.allTasks.filter(
         item => item._id !== action.payload,
       );
     },
 
-    checkTask: (state, action) => {
+    checkReduxTask: (state, action) => {
       const {_id} = action.payload;
 
       state.allTasks = state.allTasks.map(item => {
         return item._id === _id ? {...item, completed: !item.completed} : item;
       });
-    },
-
-    startTaskTime: (state, action) => {
-      const {categoryId, id} = action.payload;
-
-      const categoryPosition = state.category.findIndex(
-        category => category.id === categoryId,
-      );
-      const taskPosition = state.category[categoryPosition].tasks.findIndex(
-        task => task.id === id,
-      );
-
-      state.category[categoryPosition].tasks[taskPosition].playTime =
-        !state.category[categoryPosition].tasks[taskPosition].playTime;
-    },
-    resetTaskTime: (state, action) => {
-      state.category.map(category => {
-        return category.tasks.map(item => {
-          return (item.playTime = false);
-        });
-      });
-    },
-    updateTimer: (state, action) => {
-      const {categoryId, id, minutesLeft} = action.payload;
-
-      const categoryPosition = state.category.findIndex(
-        category => category.id === categoryId,
-      );
-      const taskPosition = state.category[categoryPosition].tasks.findIndex(
-        task => task.id === id,
-      );
-      state.category[categoryPosition].tasks[taskPosition].time.hours =
-        minutesLeft[0];
-      state.category[categoryPosition].tasks[taskPosition].time.minutes =
-        minutesLeft[1];
     },
   },
 });
@@ -142,14 +77,10 @@ export const {
   setUsername,
   createReduxTask,
   deleteReduxTask,
-  updateTask,
   updateReduxCategory,
   deleteReduxCategory,
-  checkTask,
+  checkReduxTask,
   setTaskCompleted,
-  startTaskTime,
-  updateTimer,
-  resetTaskTime,
   setCategory,
   setAllTasks,
   addToAllTasks,

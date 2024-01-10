@@ -4,11 +4,9 @@ import {NavigationContainer} from '@react-navigation/native';
 
 import {useDispatch, useSelector} from 'react-redux';
 import {
-  checkTask,
+  checkReduxTask,
   setTaskCompleted,
-  startTaskTime,
-  updateTimer,
-  resetTaskTime,
+  setChronometer,
 } from '../redux/slices/appSlice';
 
 import {GetStarted} from '../screens';
@@ -17,14 +15,12 @@ import {APP_NAVIGATION} from '../constants/navigation';
 
 import BackgroundTimer from 'react-native-background-timer';
 import {convertMinutesToHoursAndMinutes} from '../hooks/task';
+import {checkTask, updateTask} from '../hooks/api';
 
 const Stack = createStackNavigator();
 
 const AppNavigation = () => {
-  const [taskData, setTaskData] = useState({
-    categoryId: '',
-    id: '',
-  });
+  const [taskData, setTaskData] = useState();
   const username = useSelector(state => state.app.username);
   const category = useSelector(state => state.app.category);
   const taskCompleted = useSelector(state => state.app.taskCompleted);
@@ -32,47 +28,37 @@ const AppNavigation = () => {
 
   const [minutesLeft, setMinutesLeft] = useState(-1);
 
-  // const startTimer = (categoryId, id) => {
-  //   setTaskData({
-  //     categoryId,
-  //     id,
-  //   });
+  const handleCheck = async (taskId, completed) => {
+    await checkTask(taskId, {completed})
+      .then(() => {
+        taskData.setData(
+          taskData.data.map(item =>
+            item._id === taskData.id
+              ? {...item, completed: !item.completed}
+              : item,
+          ),
+        );
+      })
+      .catch(err => {
+        console.log('Error: ', err);
+      });
+  };
 
-  //   BackgroundTimer.runBackgroundTimer(() => {
-  //     setMinutesLeft(min => {
-  //       if (min > 0) {
-  //         return min - 1;
-  //       } else {
-  //         return 0;
-  //       }
-  //     });
-  //   }, 2000);
-  // };
+  const handleUpdateTask = async (taskId, taskData) => {
+    await updateTask(taskId, taskData);
+  };
 
   const stopTimer = () => {
     BackgroundTimer.stopBackgroundTimer();
   };
 
-  // useEffect(() => {
-  //   if (minutesLeft === 0) {
-  //     dispatch(setTaskCompleted(taskCompleted + 1));
-  //     dispatch(checkTask({...taskData}));
-  //     dispatch(
-  //       startTaskTime({categoryId: taskData.categoryId, id: taskData.id}),
-  //     );
-  //     stopTimer(taskData.categoryId, taskData.id);
-  //   }
-  //   if (taskData.id !== '' && taskData.categoryId !== '') {
-  //     dispatch(
-  //       updateTimer({
-  //         ...taskData,
-  //         minutesLeft: convertMinutesToHoursAndMinutes(minutesLeft),
-  //       }),
-  //     );
-  //   }
-  // }, [minutesLeft]);
+  const startTimer = (data, setData, id) => {
+    setTaskData({
+      data,
+      setData,
+      id,
+    });
 
-  const startTimer = () => {
     BackgroundTimer.runBackgroundTimer(() => {
       setMinutesLeft(min => {
         if (min > 0) {
@@ -81,12 +67,40 @@ const AppNavigation = () => {
           return 0;
         }
       });
-    }, 2000);
+    }, 8000);
   };
 
   useEffect(() => {
-    // dispatch(resetTaskTime());
-    console.log(minutesLeft);
+    if (minutesLeft === 0) {
+      dispatch(setChronometer(''));
+      handleCheck(taskData.id, true);
+      dispatch(checkReduxTask({_id: taskData.id}));
+      dispatch(setTaskCompleted(taskCompleted + 1));
+    } else if (minutesLeft !== -1) {
+      const currentTask = taskData.data.filter(
+        item => item._id === taskData.id,
+      );
+      handleUpdateTask(taskData.id, {
+        ...currentTask,
+        time: {
+          hours: convertMinutesToHoursAndMinutes(minutesLeft)[0],
+          minutes: convertMinutesToHoursAndMinutes(minutesLeft)[1],
+        },
+      });
+      taskData?.setData(
+        taskData.data.map(item => {
+          return item._id === taskData.id
+            ? {
+                ...item,
+                time: {
+                  hours: convertMinutesToHoursAndMinutes(minutesLeft)[0],
+                  minutes: convertMinutesToHoursAndMinutes(minutesLeft)[1],
+                },
+              }
+            : item;
+        }),
+      );
+    }
   }, [minutesLeft]);
 
   return username === '' ? (

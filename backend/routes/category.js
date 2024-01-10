@@ -8,16 +8,16 @@ const {
 
 const router = express.Router();
 
-// GET all workouts
+//GET all workouts
 router.get("/", getCategorys);
 
-// POST a new workout
+//POST a new workout
 router.post("/", createCategory);
 
-// DELETE a workout
+//DELETE a workout
 router.delete("/:id", deleteCategory);
 
-// UPDATE a workout
+//UPDATE a workout
 router.patch("/:id", updateCategory);
 
 module.exports = router;

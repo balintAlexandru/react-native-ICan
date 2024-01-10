@@ -11,22 +11,22 @@ const {
 
 const router = express.Router();
 
-// GET category all tasks
+//GET category all tasks
 router.get("/category/:id", getTasks);
 
 //GET All tasks
 router.get("/all", getAllTasks);
 
-// POST a new task
+//POST a new task
 router.post("/:id", createTask);
 
-// DELETE a task
+//DELETE a task
 router.delete("/:id", deleteTask);
 
-// DELETE all tasks
+//DELETE all tasks
 router.delete("/all/:id", deleteAllTasks);
 
-// UPDATE a task
+//UPDATE a task
 router.patch("/:id", updateTask);
 
 //CHECK a task

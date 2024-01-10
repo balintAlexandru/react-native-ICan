@@ -11,7 +11,6 @@ import {styles} from './TasksStyle';
 import {COLORS} from '../../constants/colors';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faArrowLeft} from '@fortawesome/free-solid-svg-icons/faArrowLeft';
-import {faGear} from '@fortawesome/free-solid-svg-icons/faGear';
 import {faBook} from '@fortawesome/free-solid-svg-icons/faBook';
 
 import {AddButton, AppModal, TaskCard} from '../../components';
@@ -23,16 +22,9 @@ import {
   updateTask,
   checkTask,
 } from '../../hooks/api';
-import {
-  createReduxTask,
-  // updateTask,
-  // checkTask,
-  startTaskTime,
-  resetTaskTime,
-  addToAllTasks,
-  deleteReduxTask,
-} from '../../redux/slices/appSlice';
-import {useDispatch, useSelector} from 'react-redux';
+
+import {addToAllTasks, deleteReduxTask} from '../../redux/slices/appSlice';
+import {useDispatch} from 'react-redux';
 
 const Tasks = ({route, navigation}) => {
   const {category, startTimer, stopTimer, setMinutesLeft} = route.params;
@@ -49,13 +41,9 @@ const Tasks = ({route, navigation}) => {
       minutes: 0,
     },
     completed: false,
-    playTime: false,
   });
 
   const dispatch = useDispatch();
-  // const categorys = useSelector(state => state.app.category);
-
-  // const tasks = categorys.filter(item => item.id === id)[0].tasks;
 
   const handleCreateTask = async () => {
     await createTask(_id, taskModel).then(response => {
@@ -101,10 +89,6 @@ const Tasks = ({route, navigation}) => {
     });
   };
 
-  // const handleStartTime = taskId => {
-  //   dispatch(startTaskTime({categoryId: id, id: taskId}));
-  // };
-
   useEffect(() => {
     const fetchData = async () => {
       await getTasks(_id).then(response => setTasks(response.data));
@@ -127,9 +111,7 @@ const Tasks = ({route, navigation}) => {
             <Text style={styles.icon}>{icon}</Text>
             <Text style={styles.title}>{name}</Text>
           </View>
-          <TouchableOpacity activeOpacity={1} onPress={() => {}}>
-            <FontAwesomeIcon icon={faGear} color={COLORS.GRAY} size={25} />
-          </TouchableOpacity>
+          <TouchableOpacity activeOpacity={1}></TouchableOpacity>
         </View>
 
         <View style={styles.tasksList}>
@@ -155,10 +137,11 @@ const Tasks = ({route, navigation}) => {
                   setEditMode={setEditMode}
                   handleCheck={handleCheck}
                   handleDeleteTask={handleDeleteTask}
-                  // handleStartTime={handleStartTime}
                   startTimer={startTimer}
                   stopTimer={stopTimer}
                   setMinutesLeft={setMinutesLeft}
+                  setTasks={setTasks}
+                  tasks={tasks}
                 />
               )}
               keyExtractor={() => Math.random()}

@@ -3,7 +3,6 @@ import {
   SafeAreaView,
   Text,
   View,
-  TouchableOpacity,
   ScrollView,
   StatusBar,
   LogBox,
@@ -21,7 +20,6 @@ import {
 import {styles} from './CategorysStyle';
 import {COLORS} from '../../constants/colors';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faGear} from '@fortawesome/free-solid-svg-icons/faGear';
 import {faBook} from '@fortawesome/free-solid-svg-icons/faBook';
 
 import {AppModal, CategoryCard, AddButton} from '../../components';
@@ -130,16 +128,6 @@ const Categorys = ({route, navigation}) => {
     <SafeAreaView style={styles.safeArea}>
       <StatusBar barStyle={'dark-content'} />
       <View style={styles.container}>
-        <View style={styles.iconWrapper}>
-          <TouchableOpacity
-            activeOpacity={1}
-            onPress={() => {
-              console.log('da');
-            }}>
-            <FontAwesomeIcon icon={faGear} color={COLORS.GRAY} size={25} />
-          </TouchableOpacity>
-        </View>
-
         <View style={styles.textWrapper}>
           <Text style={styles.title}>Hello {username}</Text>
           <Text style={styles.day}>
@@ -187,20 +175,6 @@ const Categorys = ({route, navigation}) => {
                 : allTasks?.length
                 ? taskCompleted * Math.ceil(100 / allTasks?.length)
                 : 0}
-              {/* {taskCompleted *
-                Math.ceil(
-                  100 /
-                    category.reduce((acc, val) => acc + val.tasks.length, 0),
-                ) >=
-              99
-                ? 100
-                : category[0]?.tasks?.length
-                ? taskCompleted *
-                  Math.ceil(
-                    100 /
-                      category.reduce((acc, val) => acc + val.tasks.length, 0),
-                  )
-                : 0} */}
               %
             </Text>
           </View>

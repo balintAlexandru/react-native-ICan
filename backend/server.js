@@ -11,12 +11,7 @@ const app = express();
 app.use(cors());
 
 //middleware
-//Acest middleware este o functie care se apeleaza de fiecare data cand se face un request.
-app.use(express.json({ limit: "5mb" }));
-
-app.use((req, res, next) => {
-  next();
-});
+app.use(express.json());
 
 //routes
 app.use("/api/categorys", categoryRoutes);
@@ -26,7 +21,6 @@ app.use("/api/tasks", tasksRoutes);
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
-    // listen for requests
     app.listen(process.env.PORT, () => {
       console.log(`listening on port ${process.env.PORT}`);
     });

@@ -1,36 +1,38 @@
 const Task = require("../models/taskModel");
 const mongoose = require("mongoose");
 
+//GET task
 const getTasks = async (req, res) => {
   const { id } = req.params;
-
-  await Task.find({ categoryId: id })
-    .sort({ createdAt: -1 })
-    .then((response) => {
-      res.status(200).json(response);
-    });
+  try {
+    const task = await Task.find({ categoryId: id }).sort({ createdAt: -1 });
+    res.status(200).json(task);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 };
 
 //GET all tasks
 const getAllTasks = async (req, res) => {
-  await Task.find({}).then((response) => {
-    res.status(200).json(response);
-  });
+  try {
+    const tasks = await Task.find({});
+    res.status(200).json(tasks);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 };
 
-// create new task
+//CREATE new task
 const createTask = async (req, res) => {
   const { id } = req.params;
-  const { name, time, completed, playTime } = req.body;
+  const { name, time, completed } = req.body;
 
-  //add doc to db
   try {
     const task = await Task.create({
       categoryId: id,
       name,
       time,
       completed,
-      playTime,
     });
     res.status(200).json(task);
   } catch (error) {
@@ -38,7 +40,7 @@ const createTask = async (req, res) => {
   }
 };
 
-// delete a task
+//DELETE a task
 const deleteTask = async (req, res) => {
   const { id } = req.params;
 
@@ -52,7 +54,7 @@ const deleteTask = async (req, res) => {
   res.status(200).json(task);
 };
 
-// delete all tasks
+//DELETE all tasks
 const deleteAllTasks = async (req, res) => {
   const { id } = req.params;
 
@@ -66,18 +68,18 @@ const deleteAllTasks = async (req, res) => {
   res.status(200).json(task);
 };
 
-// update a task
+//UPDATE a task
 const updateTask = async (req, res) => {
   const { id } = req.params;
 
-  const { name, time, completed, playTime } = req.body;
+  const { name, time, completed } = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(404).json({ error: "No such task" });
 
   const task = await Task.findByIdAndUpdate(
     { _id: id },
-    { name, time, completed, playTime }
+    { name, time, completed }
   );
 
   if (!task) return res.status(404).json({ error: "No such task" });
@@ -87,6 +89,7 @@ const updateTask = async (req, res) => {
   res.status(200).json(updatedTask);
 };
 
+//CHECK task
 const checkTask = async (req, res) => {
   const { id } = req.params;
 

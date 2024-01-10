@@ -1,13 +1,13 @@
-import { SafeAreaView, Text, View } from "react-native";
+import {SafeAreaView, Text, View} from 'react-native';
 
-import { styles } from "./SplashScreenStyle";
+import {styles} from './SplashScreenStyle';
 
 const SplashScreen = () => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
-        <Text style={{ fontSize: 40, color: "white", fontWeight: 800 }}>
-          ICAN SPLASHSCREEN
+        <Text style={{fontSize: 40, color: 'white', fontWeight: 800}}>
+          ICAN
         </Text>
       </View>
     </SafeAreaView>

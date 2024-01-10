@@ -15,7 +15,6 @@ import {useDispatch, useSelector} from 'react-redux';
 import {
   deleteReduxCategory,
   setTaskCompleted,
-  deleteReduxAllTasks,
   setAllTasks,
 } from '../../redux/slices/appSlice';
 
@@ -94,7 +93,7 @@ const CategoryCard = ({
           <View style={styles.infoWrapper}>
             <Text style={styles.name}>{name}</Text>
             {allTasks
-              .filter(item => item.categoryId === _id)
+              ?.filter(item => item.categoryId === _id)
               .reduce((a, b) => (b.completed ? a + 1 : a + 0), 0) ===
               allTasks.filter(item => item.categoryId === _id).length &&
             allTasks.filter(item => item.categoryId === _id).length !== 0 ? (

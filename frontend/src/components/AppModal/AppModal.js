@@ -211,7 +211,6 @@ const AppModal = ({
                         minutes: 0,
                       },
                       completed: false,
-                      playTime: false,
                     });
                   }
                 }}
@@ -242,7 +241,6 @@ const AppModal = ({
                         minutes: 0,
                       },
                       completed: false,
-                      playTime: false,
                     });
                   }
                 }}

@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: RFValue(24),
-    paddingTop: RFValue(10),
+    paddingTop: RFValue(15),
     paddingBottom: RFValue(10),
   },
   iconWrapper: {

@@ -3,18 +3,17 @@ const mongoose = require("mongoose");
 
 //GET all categorys
 const getCategorys = async (req, res) => {
-  await Category.find({})
-    .sort({ createdAt: -1 })
-    .then((response) => {
-      res.status(200).json(response);
-    });
+  try {
+    const categorys = await Category.find({}).sort({ createdAt: -1 });
+    res.status(200).json(categorys);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 };
 
-// create new category
+//CREATE new category
 const createCategory = async (req, res) => {
   const { name, icon } = req.body;
-
-  //add doc to db
   try {
     const category = await Category.create({ name, icon });
     res.status(200).json(category);
@@ -23,7 +22,7 @@ const createCategory = async (req, res) => {
   }
 };
 
-// delete a category
+//DELETE a category
 const deleteCategory = async (req, res) => {
   const { id } = req.params;
 
@@ -37,7 +36,7 @@ const deleteCategory = async (req, res) => {
   res.status(200).json(category);
 };
 
-// update a workout
+//UPDATE a workout
 const updateCategory = async (req, res) => {
   const { id } = req.params;
   const { name, icon } = req.body;
