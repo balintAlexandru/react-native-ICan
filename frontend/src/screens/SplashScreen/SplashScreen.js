@@ -6,7 +6,7 @@ const SplashScreen = () => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
-        <Text style={{fontSize: 40, color: 'white', fontWeight: 800}}>
+        <Text style={{fontSize: 40, color: '#ef3838', fontWeight: 800}}>
           ICAN
         </Text>
       </View>
