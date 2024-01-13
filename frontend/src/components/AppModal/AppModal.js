@@ -83,6 +83,8 @@ const AppModal = ({
                   borderColor: handleBorderColor(),
                 }}
                 fontSize={16}
+                placeholder="Please enter name here"
+                placeholderTextColor={COLORS.GRAY}
                 keyboardType={'default'}
                 value={value.name}
                 onChangeText={text => setValue({...value, name: text})}

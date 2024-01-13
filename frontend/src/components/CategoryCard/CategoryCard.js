@@ -9,7 +9,7 @@ import {faXmark} from '@fortawesome/free-solid-svg-icons/faXmark';
 
 import {Button} from '..';
 
-import {deleteCategory, deleteAllTasks} from '../../hooks/api';
+import {deleteCategory, deleteAllTasks} from '../../axios/api';
 
 import {useDispatch, useSelector} from 'react-redux';
 import {

@@ -11,7 +11,7 @@ export const styles = StyleSheet.create({
     height: '50%',
   },
   container: {
-    height: '80%',
+    height: '78%',
     backgroundColor: 'white',
     bottom: 0,
     position: 'absolute',

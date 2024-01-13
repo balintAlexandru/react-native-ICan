@@ -14,8 +14,8 @@ import {GetStarted} from '../screens';
 import {APP_NAVIGATION} from '../constants/navigation';
 
 import BackgroundTimer from 'react-native-background-timer';
-import {convertMinutesToHoursAndMinutes} from '../hooks/task';
-import {checkTask, updateTask} from '../hooks/api';
+import {convertMinutesToHoursAndMinutes} from '../helper/task';
+import {checkTask, updateTask} from '../axios/api';
 
 const Stack = createStackNavigator();
 
@@ -67,7 +67,7 @@ const AppNavigation = () => {
           return 0;
         }
       });
-    }, 8000);
+    }, 1000);
   };
 
   useEffect(() => {

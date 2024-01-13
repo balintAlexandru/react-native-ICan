@@ -22,7 +22,7 @@ const GetStarted = () => {
           style={styles.input}
           fontSize={16}
           placeholder="Write name here"
-          placeholderTextColor={styles.GRAY}
+          placeholderTextColor={COLORS.GRAY}
           keyboardType={'default'}
           autoFocus={true}
           value={name}

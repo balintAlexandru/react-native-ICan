@@ -12,7 +12,7 @@ import {faCheck} from '@fortawesome/free-solid-svg-icons/faCheck';
 import {faClock} from '@fortawesome/free-solid-svg-icons/faClock';
 import {faCirclePause} from '@fortawesome/free-solid-svg-icons/faCirclePause';
 
-import {convertTimeStringToMinutes} from '../../hooks/task';
+import {convertTimeStringToMinutes} from '../../helper/task';
 
 import {useDispatch, useSelector} from 'react-redux';
 import {

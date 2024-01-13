@@ -25,13 +25,13 @@ import {faBook} from '@fortawesome/free-solid-svg-icons/faBook';
 import {AppModal, CategoryCard, AddButton} from '../../components';
 import {AnimatedCircularProgress} from 'react-native-circular-progress';
 
-import getCurrentDate from '../../hooks/date';
+import getCurrentDate from '../../helper/date';
 import {
   getCategory,
   createCategory,
   updateCategory,
   getAllTasks,
-} from '../../hooks/api';
+} from '../../axios/api';
 
 LogBox.ignoreAllLogs();
 

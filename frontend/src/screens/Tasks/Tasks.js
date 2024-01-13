@@ -21,7 +21,7 @@ import {
   deleteTask,
   updateTask,
   checkTask,
-} from '../../hooks/api';
+} from '../../axios/api';
 
 import {addToAllTasks, deleteReduxTask} from '../../redux/slices/appSlice';
 import {useDispatch} from 'react-redux';
