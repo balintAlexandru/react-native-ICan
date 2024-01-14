@@ -130,6 +130,12 @@ Even for personal projects, using Figma can offer significant benefits. While co
 
 ### STEP 1
 
-<img src="https://raw.githubusercontent.com/balintAlexandru/react-native-ICan/main/documentation/gifs/part1.gif" alt="Nume Descriptiv" width="auto" height="400">
+<img src="https://raw.githubusercontent.com/balintAlexandru/react-native-ICan/main/documentation/gifs/part1.gif" alt="Nume Descriptiv" width="auto" height="450">
 
 When the app is opened, you will be redirected to a screen where you should enter your username. This name will be saved in a reducer that will persist as long as the app is installed. The next time you enter the app, this screen will no longer be shown because you have already set the username.
+
+### STEP 2
+
+<img src="https://raw.githubusercontent.com/balintAlexandru/react-native-ICan/main/documentation/gifs/part2.gif" alt="Nume Descriptiv" width="auto" height="450">
+
+Now, we need to create a category for our future tasks. Click on the plus button, and a modal will open. In this modal, you will find an input for the name of the category and a special input for the category icon. For icons, I used an external library called rn-emoji-keyboard. After you complete all the fields, the category will be created. It should be mentioned that all fields have validation applied to them.
