@@ -130,7 +130,7 @@ Even for personal projects, using Figma can offer significant benefits. While co
 
 ### STEP 1
 
-<iframe width="auto" height="450" src="https://github.com/balintAlexandru/react-native-ICan/assets/64432171/0cd26baf-f7aa-46f3-955f-91d1028f122e" frameborder="0" allowfullscreen></iframe>
+https://github.com/balintAlexandru/react-native-ICan/assets/64432171/0cd26baf-f7aa-46f3-955f-91d1028f122e
 
 When the app is opened, you will be redirected to a screen where you should enter your username. This name will be saved in a reducer that will persist as long as the app is installed. The next time you enter the app, this screen will no longer be shown because you have already set the username.
 
