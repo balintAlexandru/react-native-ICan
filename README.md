@@ -1,4 +1,4 @@
-<img src="https://raw.githubusercontent.com/balintAlexandru/react-native-ICan/main/documentation/images/logo.png" alt="logo" width="70" height="70">
+<img src="https://raw.githubusercontent.com/balintAlexandru/react-native-ICan/main/documentation/images/logo.png" alt="logo" width="90" height="90">
 
 # Todo full stack application
 
@@ -98,7 +98,7 @@ Even for personal projects, using Figma can offer significant benefits. While co
 
 ### Database Schema
 
-#### Collections (Tables)
+### Collections (Tables)
 
 1. Categories
 
@@ -114,7 +114,7 @@ Even for personal projects, using Figma can offer significant benefits. While co
      - **time** (Object) - Duration of the task (hours and minutes)
      - **completed** (Boolean) - Indicate whether the task is completed or not.
 
-#### Relationships
+### Relationships
 
 1. Category to Tasks (One-to-Many):
 
@@ -130,25 +130,25 @@ Even for personal projects, using Figma can offer significant benefits. While co
 
 ### STEP 1
 
-<img src="https://raw.githubusercontent.com/balintAlexandru/react-native-ICan/main/documentation/gifs/part1.gif" alt="Nume Descriptiv" width="auto" height="450">
+<img src="https://raw.githubusercontent.com/balintAlexandru/react-native-ICan/main/documentation/gifs/part1.gif" alt="part1" width="auto" height="450">
 
 When the app is opened, you will be redirected to a screen where you should enter your username. This name will be saved in a reducer that will persist as long as the app is installed. The next time you enter the app, this screen will no longer be shown because you have already set the username.
 
 ### STEP 2
 
-<img src="https://raw.githubusercontent.com/balintAlexandru/react-native-ICan/main/documentation/gifs/part2.gif" alt="Nume Descriptiv" width="auto" height="450">
+<img src="https://raw.githubusercontent.com/balintAlexandru/react-native-ICan/main/documentation/gifs/part2.gif" alt="part2" width="auto" height="450">
 
 Now, we need to create a category for our future tasks. Click on the plus button, and a modal will open. In this modal, you will find an input for the name of the category and a special input for the category icon. For icons, I used an external library called rn-emoji-keyboard. After you complete all the fields, the category will be created. It should be mentioned that all fields have validation applied to them.
 
 ### STEP 3
 
-<img src="https://raw.githubusercontent.com/balintAlexandru/react-native-ICan/main/documentation/gifs/part3.gif" alt="Nume Descriptiv" width="auto" height="450">
+<img src="https://raw.githubusercontent.com/balintAlexandru/react-native-ICan/main/documentation/gifs/part3.gif" alt="part3" width="auto" height="450">
 
 Now that the category is created, simply press on the card and create the task according to the category. To create a task, you need to add a name, and optionally, a time. I added the time field because you can start the chronometer and know how long you worked on that task.The category and task card settings will be present in the following step.
 
 ### STEP 4
 
-<img src="https://raw.githubusercontent.com/balintAlexandru/react-native-ICan/main/documentation/gifs/part4.gif" alt="Nume Descriptiv" width="auto" height="450">
+<img src="https://raw.githubusercontent.com/balintAlexandru/react-native-ICan/main/documentation/gifs/part4.gif" alt="part4" width="auto" height="450">
 
 The category can be edited and deleted. On the main screen, there is an information card that will display the total number of tasks from all categories and how many are completed. This information is represented with a circular progress bar. Tasks can be edited or deleted. Additionally, for cards with a time field, there is an extra button that allows you to start the chronometer. In the example, I set the chronometer for 1 second. After the time is elapsed, the checkbox will be marked as true, indicating that the task is done.
 
