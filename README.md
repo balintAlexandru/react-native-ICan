@@ -44,7 +44,7 @@ Even for personal projects, using Figma can offer significant benefits. While co
 
 ### API Endpoints
 
-#### A.Categories Endpoints
+### A.Categories Endpoints
 
 1. **GET /api/categories/**
 
@@ -65,7 +65,7 @@ Even for personal projects, using Figma can offer significant benefits. While co
    - _Purpose_: Update a category.
    - _Description_: Update the details of the category with the specified ID.
 
-#### B.Tasks Endpoints
+### B.Tasks Endpoints
 
 1. **GET /api/tasks/category/:id**
 
@@ -139,3 +139,19 @@ When the app is opened, you will be redirected to a screen where you should ente
 <img src="https://raw.githubusercontent.com/balintAlexandru/react-native-ICan/main/documentation/gifs/part2.gif" alt="Nume Descriptiv" width="auto" height="450">
 
 Now, we need to create a category for our future tasks. Click on the plus button, and a modal will open. In this modal, you will find an input for the name of the category and a special input for the category icon. For icons, I used an external library called rn-emoji-keyboard. After you complete all the fields, the category will be created. It should be mentioned that all fields have validation applied to them.
+
+### STEP 3
+
+<img src="https://raw.githubusercontent.com/balintAlexandru/react-native-ICan/main/documentation/gifs/part3.gif" alt="Nume Descriptiv" width="auto" height="450">
+
+Now that the category is created, simply press on the card and create the task according to the category. To create a task, you need to add a name, and optionally, a time. I added the time field because you can start the chronometer and know how long you worked on that task.The category and task card settings will be present in the following step.
+
+### STEP 4
+
+<img src="https://raw.githubusercontent.com/balintAlexandru/react-native-ICan/main/documentation/gifs/part4.gif" alt="Nume Descriptiv" width="auto" height="450">
+
+The category can be edited and deleted. On the main screen, there is an information card that will display the total number of tasks from all categories and how many are completed. This information is represented with a circular progress bar. Tasks can be edited or deleted. Additionally, for cards with a time field, there is an extra button that allows you to start the chronometer. In the example, I set the chronometer for 1 second. After the time is elapsed, the checkbox will be marked as true, indicating that the task is done.
+
+## 6. Future Improvements
+
+A future improvement for this app could include the implementation of user authentication and push notifications. User authentication would enhance personalization and security, allowing users to have their own accounts with personalized task data. Push notifications can be used to alert users when the chronometer stop and when a task's set time has finished, providing timely reminders and updates on task progress. This would enhance the overall user experience and engagement with the app.
