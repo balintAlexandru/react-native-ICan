@@ -136,19 +136,19 @@ When the app is opened, you will be redirected to a screen where you should ente
 
 ### STEP 2
 
-<img src="https://raw.githubusercontent.com/balintAlexandru/react-native-ICan/main/documentation/gifs/part2.gif" alt="part2" width="auto" height="450">
+https://github.com/balintAlexandru/react-native-ICan/assets/64432171/864c966d-339c-44d4-a65c-4257b8686db5
 
 Now, we need to create a category for our future tasks. Click on the plus button, and a modal will open. In this modal, you will find an input for the name of the category and a special input for the category icon. For icons, I used an external library called rn-emoji-keyboard. After you complete all the fields, the category will be created. It should be mentioned that all fields have validation applied to them.
 
 ### STEP 3
 
-<img src="https://raw.githubusercontent.com/balintAlexandru/react-native-ICan/main/documentation/gifs/part3.gif" alt="part3" width="auto" height="450">
+https://github.com/balintAlexandru/react-native-ICan/assets/64432171/d276a108-1491-4138-96dc-f22b1b61bee0
 
 Now that the category is created, simply press on the card and create the task according to the category. To create a task, you need to add a name, and optionally, a time. I added the time field because you can start the chronometer and know how long you worked on that task.The category and task card settings will be present in the following step.
 
 ### STEP 4
 
-<img src="https://raw.githubusercontent.com/balintAlexandru/react-native-ICan/main/documentation/gifs/part4.gif" alt="part4" width="auto" height="450">
+https://github.com/balintAlexandru/react-native-ICan/assets/64432171/b762e946-a65e-410b-a083-0a59a0de68ac
 
 The category can be edited and deleted. On the main screen, there is an information card that will display the total number of tasks from all categories and how many are completed. This information is represented with a circular progress bar. Tasks can be edited or deleted. Additionally, for cards with a time field, there is an extra button that allows you to start the chronometer. In the example, I set the chronometer for 1 second. After the time is elapsed, the checkbox will be marked as true, indicating that the task is done.
 
